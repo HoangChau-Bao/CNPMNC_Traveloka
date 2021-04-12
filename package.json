@@ -1,0 +1,33 @@
+{
+  "name": "traveloka_vourcher",
+  "version": "1.0.0",
+  "description": "traveloka, vourcher, traveloka vourcher",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "start": "nodemon --inspect src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HoangChau-Bao/CNPMNC_Traveloka.git"
+  },
+  "keywords": [
+    "traveloka",
+    "vourcher",
+    "traveloka",
+    "vourcher"
+  ],
+  "author": "Nhom may quen r",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HoangChau-Bao/CNPMNC_Traveloka/issues"
+  },
+  "homepage": "https://github.com/HoangChau-Bao/CNPMNC_Traveloka#readme"
+}
