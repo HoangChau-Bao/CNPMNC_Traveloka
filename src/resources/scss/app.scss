@@ -1,2 +1,50 @@
 @import 'variable.scss';
 
+.container {
+  align-items: center;
+}
+
+.voucher-detail {
+  text-align: center;
+}
+
+.voucherdetail-top-image {
+  object-fit: contain;
+}
+
+.contentHeader-text {
+  margin-top: 20px;
+  white-space: pre-line;
+  line-height: 2.5;
+  font-weight: bold;
+}
+
+.content-text {
+  margin-top: 10px;
+  white-space: pre-line;
+  line-height: 2.5;
+}
+
+.voucher-note {
+  margin-top: 10px;
+}
+
+.btn-findvoucher {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 1700px;
+  height: 50px;
+  text-align: center;
+}
+
+.card-code {
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-bottom: 10px; /* Added */
+  margin-top: 40px;
+}
+
+.clipBoard {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

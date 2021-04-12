@@ -1,19 +1,14 @@
-
+const { mutipleMongooseToObject } = require('../../util/mongoose');
 const Voucher = require('../models/Voucher');
 
 class SiteController {
-        
-    //[GET] /#
-    index(req, res) {     
-        res.render('home');
-
-    //    Voucher.find({}, function (error, vouchers) {
-    //         if(!error)
-    //             res.json(vouchers);
-    //         else
-    //             res.status(400).json({ error: 'ERROR !!!'});
-    //    });
-    }
-
+  //[GET] /#home
+  index(req, res, next) {
+    Voucher.find({})
+      .then((vouchers) =>
+        res.render('home', { vouchers: mutipleMongooseToObject(vouchers) }),
+      )
+      .catch(next);
+  }
 }
 module.exports = new SiteController();

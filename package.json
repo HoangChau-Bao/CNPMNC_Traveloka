@@ -4,6 +4,7 @@
   "description": "traveloka, vourcher, traveloka vourcher",
   "main": "src/index.js",
   "dependencies": {
+    "clipboard": "^2.0.8",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0",
     "mongoose": "^5.12.3"
@@ -19,7 +20,7 @@
   "scripts": {
     "makeup": "lint-staged",
     "start": "nodemon --inspect src/index.js",
-    "watch": "node-sass --watch src/resources/scss --ouput src/public/css",
+    "watch": "node-sass -w src/resources/scss --output src/public/css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
