@@ -1,1 +1,71 @@
-<h1>Add Voucher</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" >
+    <title>Form -Thêm Voucher</title>
+</head>
+<body>
+<div class="containeradd">
+    <form class="form-Them-Voucher">
+        
+        <h1>Thêm Voucher</h1>
+        <div class="form-text">
+            <label>Tên Voucher</label>
+            <input type="text">
+        </div>
+        <div class="form-radio">
+            <label>Phân loại: </label>
+            <input type="radio" value="mien-phi" name="phanloai" id="mien-phi">
+            <lable for="mien-phi">Miễn phí</label>
+            <input type="radio" value="doi-diem" name="phanloai" id="doi-diem">
+            <label for="doi-diem">Đổi điểm</label> 
+        </div>
+        
+        <div class="form-date">
+            <label>Thời hạn sử dụng từ ngày: </label>
+
+            <input type="date" name="bday">
+            <label>Đến ngày:</label>
+            <input type="date" name="bday">
+            
+        </div>
+        <div class="form-file">
+            <label>Link ảnh</label>
+            <input type="file" name="linkanh">
+        </div>
+        <div class="form-text">
+            <label>Mô tả chi tiết</label>
+            <input type="text">
+        </div>
+        
+        <div class="form-text">
+            <label>Giá (Point)</label>
+            <input type="number" name="points" min="0" max="10000" step="100" >
+        </div>
+
+        <button>Submit</button>
+        <button>Cancel</button>
+    </form>
+    
+</div>
+<script>
+    const formThemVoucher = document.querySelectorAll('.form-text input')
+    const formLabel = document.querySelectorAll('.form-text label')
+    for(let i=0;i<20;i++){
+        formThemVoucher[i].addEventListener("mouseover",function(){
+            formLabel[i].classList.add("focus")
+        })
+        formThemVoucher[i].addEventListener("mouseout",function(){
+            if(formThemVoucher[i].value ==""){
+                formLabel[i].classList.remove("focus")
+            }
+            
+        })
+    }
+</script>
+</body>
+</html>
+        
+            

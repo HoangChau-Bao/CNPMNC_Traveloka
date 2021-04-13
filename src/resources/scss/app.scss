@@ -48,3 +48,101 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+// AddVoucher css
+
+:root {
+  --bg1: rgba(229, 255, 192, 0.653);
+  --bg2: rgba(0, 149, 255, 0.925);
+  --bg3: rgba(255, 0, 242, 0.762);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+a {
+  text-decoration: none;
+}
+.containeradd {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100vw;
+  height: 120vh;
+  background: linear-gradient(to bottom right, var(--bg1), var(--bg2));
+}
+.form-Them-Voucher {
+  width: 500px;
+  height: 750px;
+  background: rgba(128, 128, 128, 0.476);
+  border-radius: 10px;
+  padding: 40px 40px;
+  color: rgb(15, 97, 138);
+}
+.form-Them-Voucher h1 {
+  margin-bottom: 40px;
+}
+.form-Them-Voucher button {
+  height: 40px;
+  width: 40%;
+  margin-bottom: 30px;
+  background: linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3));
+  border: none;
+  color: white;
+  border-radius: 10px;
+  background-size: 200%;
+  transition: 0.5s;
+}
+.form-Them-Voucher button:hover {
+  background-position: right;
+}
+.form-date {
+  text-align: left;
+  margin-bottom: 40px;
+  position: relative;
+  color: black;
+}
+.form-date input {
+  width: 100%;
+  height: 35px;
+  border: none;
+  border-bottom: 2px solid pink;
+  cursor: pointer;
+  padding-left: 12px;
+}
+
+.form-file {
+  text-align: left;
+  margin-bottom: 40px;
+  position: relative;
+  color: black;
+}
+.form-radio {
+  margin-bottom: 40px;
+  position: relative;
+  color: black;
+}
+.form-text {
+  margin-bottom: 40px;
+  position: relative;
+  color: black;
+}
+.form-text input {
+  width: 100%;
+  height: 35px;
+  border: none;
+  border-bottom: 2px solid pink;
+  cursor: pointer;
+  padding-left: 12px;
+}
+.form-text label {
+  position: absolute;
+  left: 12px;
+  bottom: 2px;
+}
+.form-text label.focus {
+  transform: translateY(-35px);
+}
