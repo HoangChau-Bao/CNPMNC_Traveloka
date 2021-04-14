@@ -61,28 +61,30 @@ a {
   align-items: center;
   text-align: center;
   width: 100vw;
-  height: 120vh;
+  height: 200vh;
   background: linear-gradient(to bottom right, var(--bg1), var(--bg2)); }
 
 .form-Them-Voucher {
-  width: 500px;
-  height: 750px;
+  width: 600px;
+  height: 1370px;
   background: rgba(128, 128, 128, 0.476);
-  border-radius: 10px;
-  padding: 40px 40px;
+  border-radius: 100px;
+  padding: 50px 50px;
   color: #0f618a; }
 
 .form-Them-Voucher h1 {
-  margin-bottom: 40px; }
+  margin-bottom: 30px; }
 
 .form-Them-Voucher button {
-  height: 40px;
-  width: 40%;
+  margin: 20px;
+  margin-top: 25px;
+  height: 50px;
+  width: 30%;
   margin-bottom: 30px;
   background: linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3));
   border: none;
   color: white;
-  border-radius: 10px;
+  border-radius: 50px;
   background-size: 200%;
   transition: 0.5s; }
 
@@ -91,49 +93,47 @@ a {
 
 .form-date {
   text-align: left;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   position: relative;
   color: black; }
 
 .form-date input {
   width: 100%;
-  height: 35px;
-  border: none;
+  height: 45px;
+  border-radius: 10px;
+  border-right: 2px pink;
+  border-left: 2px pink;
   border-bottom: 2px solid pink;
+  border-top: 2px solid pink;
   cursor: pointer;
   padding-left: 12px; }
 
 .form-file {
   text-align: left;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   position: relative;
   color: black; }
 
 .form-radio {
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   position: relative;
   color: black; }
 
 .form-text {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   position: relative;
   color: black; }
 
 .form-text input {
   width: 100%;
-  height: 35px;
-  border: none;
+  height: 45px;
+  border-radius: 10px;
+  border-right: 2px pink;
+  border-left: 2px pink;
   border-bottom: 2px solid pink;
+  border-top: 2px solid pink;
   cursor: pointer;
   padding-left: 12px; }
-
-.form-text label {
-  position: absolute;
-  left: 12px;
-  bottom: 2px; }
-
-.form-text label.focus {
-  transform: translateY(-35px); }
 
 #sidebar {
   display: table-cell;

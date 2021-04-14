@@ -11,10 +11,24 @@
     <form class="form-Them-Voucher">
         
         <h1>Thêm Voucher</h1>
+        
         <div class="form-text">
-            <label>Tên Voucher</label>
-            <input type="text">
+            
+            <input type="text" placeholder="VoucherId">
         </div>
+        
+        <div class="form-text">
+            <input type="text" placeholder="CatalogId">
+        </div>
+
+        <div class="form-text">
+            <input type="text" placeholder="Tên Voucher">
+        </div>
+
+        <div class="form-text">
+            <input type="text" placeholder="Content">
+        </div>
+
         <div class="form-radio">
             <label>Phân loại: </label>
             <input type="radio" value="mien-phi" name="phanloai" id="mien-phi">
@@ -31,40 +45,56 @@
             <input type="date" name="bday">
             
         </div>
+
+        <div class="form-text">
+            <input type="number" name="points" min="0" max="10000" step="100"  placeholder="Giá (Point)">
+        </div>
+
+        <div class="form-text">
+            <input type="text" placeholder="Discount">
+        </div>
+
+        <div class="form-text">
+            <input type="text" placeholder="Quantity">
+        </div>
+
+        <div class="form-text">
+            <input type="text" placeholder="Code">
+        </div>
+
+        <div class="form-text">
+            <input type="text" placeholder="PartnerID">
+        </div>
+
         <div class="form-file">
             <label>Link ảnh</label>
             <input type="file" name="linkanh">
         </div>
+
         <div class="form-text">
-            <label>Mô tả chi tiết</label>
-            <input type="text">
+            <input type="text" placeholder="Pre Content">
+        </div>
+
+        <div class="form-text">
+            <input type="text" placeholder="Slug">
+        </div>
+
+        <div class="form-text">
+            <input type="text" placeholder="Content Header">
+        </div>
+
+        <div class="form-text">
+            <input type="text" placeholder="Mô tả chi tiết">
         </div>
         
-        <div class="form-text">
-            <label>Giá (Point)</label>
-            <input type="number" name="points" min="0" max="10000" step="100" >
-        </div>
+        
 
         <button>Submit</button>
         <button>Cancel</button>
     </form>
     
 </div>
-<script>
-    const formThemVoucher = document.querySelectorAll('.form-text input')
-    const formLabel = document.querySelectorAll('.form-text label')
-    for(let i=0;i<20;i++){
-        formThemVoucher[i].addEventListener("mouseover",function(){
-            formLabel[i].classList.add("focus")
-        })
-        formThemVoucher[i].addEventListener("mouseout",function(){
-            if(formThemVoucher[i].value ==""){
-                formLabel[i].classList.remove("focus")
-            }
-            
-        })
-    }
-</script>
+
 </body>
 </html>
         
