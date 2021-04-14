@@ -1,5 +1,17 @@
 @import 'variable.scss';
 
+.first-comment {
+  margin-top: 150px;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.second-comment {
+  margin-top: 10px;
+  font-size: 2rem;
+  font-style: italic;
+}
+
 .card-voucher-item {
   margin-top: 16px;
   margin-right: 16px;
@@ -10,6 +22,7 @@
 }
 
 .voucherdetail-top-image {
+  padding-top: 100px;
   object-fit: contain;
 }
 
