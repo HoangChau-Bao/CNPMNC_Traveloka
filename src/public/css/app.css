@@ -78,11 +78,11 @@ a {
 
 .form-Them-Voucher {
   width: 600px;
-  height: 1370px;
+  height: 1280px;
   background: rgba(128, 128, 128, 0.476);
   border-radius: 100px;
-  padding: 60px 50px;
-  color: #0f618a; }
+  padding: 50px 50px;
+  color: #da4caf; }
 
 .form-Them-Voucher h1 {
   margin-bottom: 30px; }
@@ -152,7 +152,7 @@ a {
   border-right: solid #8bd3f5;
   display: table-cell;
   width: 15%;
-  vertical-align: top;
+  vertical-align: middle;
   background-color: #4fc0e6; }
 
 .sidebar a {
