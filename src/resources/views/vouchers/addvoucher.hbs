@@ -1,24 +1,24 @@
 
 <div class="containeradd">
-    <form class="form-Them-Voucher">
+    <form class="form-Them-Voucher" method="POST" action="/vouchers/store">
         
         <h1>Thêm Voucher</h1>
         
         <div class="form-text">
             
-            <input type="text" placeholder="VoucherId">
+            <input type="text" name="voucherId" placeholder="VoucherId">
         </div>
         
         <div class="form-text">
-            <input type="text" placeholder="CatalogId">
+            <input type="text" name="catalogId" placeholder="CatalogId">
         </div>
 
         <div class="form-text">
-            <input type="text" placeholder="Tên Voucher">
+            <input type="text" name="name" placeholder="Tên Voucher">
         </div>
 
         <div class="form-text">
-            <input type="text" placeholder="Content">
+            <input type="text" name="content" placeholder="Nội dung">
         </div>
 
         <div class="form-radio">
@@ -39,44 +39,41 @@
         </div>
 
         <div class="form-text">
-            <input type="number" name="points" min="0" max="10000" step="100"  placeholder="Giá (Point)">
+            <input type="number" name="pointCost" min="0" max="10000" step="100"  placeholder="Giá (Point)">
         </div>
 
         <div class="form-text">
-            <input type="text" placeholder="Discount">
+            <input type="text" name="discount" placeholder="Discount">
         </div>
 
         <div class="form-text">
-            <input type="text" placeholder="Quantity">
+            <input type="text" name="quantity" placeholder="Quantity">
         </div>
 
         <div class="form-text">
-            <input type="text" placeholder="Code">
+            <input type="text" name="Code" placeholder="Code">
         </div>
 
         <div class="form-text">
-            <input type="text" placeholder="PartnerID">
+            <input type="text" name="partnerID" placeholder="PartnerID">
         </div>
 
         <div class="form-file">
             <label>Link ảnh</label>
-            <input type="file" name="linkanh">
+            <input type="file" name="imageLink">
         </div>
 
         <div class="form-text">
-            <input type="text" placeholder="Pre Content">
+            <input type="text" name="preContent" placeholder="Quảng cáo trong thẻ">
+        
         </div>
 
         <div class="form-text">
-            <input type="text" placeholder="Slug">
+            <input type="text" name="contentHeader" placeholder="Tiêu đề">
         </div>
 
         <div class="form-text">
-            <input type="text" placeholder="Content Header">
-        </div>
-
-        <div class="form-text">
-            <input type="text" placeholder="Mô tả chi tiết">
+            <input type="text" name="voucherNote" placeholder="Mô tả giá trị ưu đãi">
         </div>
         
         
@@ -87,6 +84,9 @@
     
 </div>
 
+<<<<<<< HEAD:src/resources/views/addvoucher.hbs
 
+=======
+>>>>>>> 58d560b74381fcea88bb2ea169d3ef3b92ea596a:src/resources/views/vouchers/addvoucher.hbs
         
             

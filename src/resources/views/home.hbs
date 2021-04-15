@@ -1,32 +1,33 @@
 
 
 
-<div id="sidebar">
-		{{!-- <a href="#">Link 1</a>
-		<a href="#">Link 2</a>
-		<a href="#">Link 3</a>
-		<a href="#">Link 4</a>
-		<a href="#">Link 5</a> --}}
-
-        Bên đây là side bar
-
+    <div class="sidebar" >
+            <a href="#">Trang Chủ </a>
+            <a href="#">Tài Khoản </a>
+		    <a href="#">Đặt Chỗ</a>
+		    <a href="#">Đã Lưu</a>
+		    <a href="#">Hộp Thư</a>
+            <a href="#">Điểm Thưởng</a>
+            <a href="#">Trợ Giúp</a>
+           
 	</div>
 	<div id="content">
 
-        <div class="first-comment mt-5">
-            <h2>Cập nhật tất cả khuyến mãi hiện hành</h2>
+        <div>
+            <p class="first-comment">Cập nhật tất cả khuyến mãi hiện hành</p>
 
-            <h5>Bạn đang chuẩn bị cho kỳ nghỉ hay bận rộn với chuyến công tác sắp tới? Hãy tiết kiệm hơn với Traveloka! Xem ngay các khuyến mãi của chúng tôi ở dưới đây:</h5>
+            <p class="second-comment">Bạn đang chuẩn bị cho kỳ nghỉ hay bận rộn với chuyến công tác sắp tới? Hãy tiết kiệm hơn với Traveloka! Xem ngay các khuyến mãi của chúng tôi ở dưới đây:</p>
         </div>
 
         <div class="mt-4 mb-5">
-            <div class="row">
+            
+            <div class="row">*
 
                 
                 {{#each vouchers}}
                 <div class="col-sm-6 col-lg-4">
                     
-                    <div class="card card-voucher-item" style="width: 30rem;">
+                    <div class="card card-voucher-item" style="width: 28rem;">
                         <a href="/vouchers/{{this.slug}}">
                             <img class="card-img-top" src="{{this.imageLink}}" alt="{{this.name}}">
                         </a>               
