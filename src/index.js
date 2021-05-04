@@ -1,18 +1,14 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const path = require('path');
 const handlebars = require('express-handlebars');
+const sql = require('mssql');
 const app = express();
 const port = 3000;
 
 //const routes
 const route = require('./routes');
-
-//Mongoose
-const db = require('./config/db');
-
-//Connect to db
-db.connect();
 
 //Http logger
 app.use(morgan('combined'));
@@ -26,6 +22,9 @@ app.use(
     extended: true, //body parser được tích học từ express 4.16
   }),
 );
+
+//Cors
+app.use(cors());
 
 //Template engine
 app.engine(

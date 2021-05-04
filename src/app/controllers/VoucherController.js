@@ -1,12 +1,13 @@
-const { mongooseToObject } = require('../../util/mongoose');
+// const { mongooseToObject } = require('../../util/mongoose');
 const Voucher = require('../models/Voucher');
+const sql = require('mssql');
 
 class VoucherController {
   //[GET] /vouchers/:slug
   show(req, res, next) {
     Voucher.findOne({ slug: req.params.slug })
       .then((voucher) => {
-        res.render('vouchers/show', { voucher: mongooseToObject(voucher) });
+        res.render('vouchers/show', voucher);
       })
       .catch(next);
   }
