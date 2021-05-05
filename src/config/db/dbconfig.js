@@ -2,7 +2,7 @@ const config = {
   server: 'DESKTOP-O0HOLC8',
   user: 'sa',
   password: 'Hoang0402',
-  database: 'CNPM',
+  database: 'QLVoucher',
   option: {
     instancename: 'SQLEXPRESS',
     port: 497671,
