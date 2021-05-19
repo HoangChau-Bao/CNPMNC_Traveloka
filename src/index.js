@@ -9,12 +9,16 @@ const port = 3000;
 
 //const routes
 const route = require('./routes');
+const fileUpload = require('express-fileupload');
 
 //Http logger
 app.use(morgan('combined'));
 
 //scss
 app.use(express.static(path.join(__dirname, 'public')));
+
+//file-upload
+app.use(fileUpload());
 
 //middleware
 app.use(

@@ -1,92 +1,93 @@
-
 <div class="containeradd">
-    <form class="form-Them-Voucher" method="POST" action="/vouchers/store">
-        
+
+    <form class="form-Them-Voucher" method="POST" action="/vouchers/store" enctype="multipart/form-data">
+        <div class="add">
         <h1>Thêm Voucher</h1>
         
-        <div class="form-text">
-            
-            <input type="text" name="voucherId" placeholder="VoucherId">
-        </div>
         
         <div class="form-text">
-            <input type="text" name="catalogId" placeholder="CatalogId">
+            <select name="CatalogID" id="CatalogID" placeholder="Loại dịch vụ"  required="">
+                <option value="xe">Xe</option>
+                <option value="maybay">Máy bay</option>
+                <option value="khachsan">Khách sạn</option>
+            </select>
         </div>
 
-        <div class="form-text">
-            <input type="text" name="name" placeholder="Tên Voucher">
-        </div>
+        
 
         <div class="form-text">
-            <input type="text" name="content" placeholder="Nội dung">
+            <input type="text" name="Name" placeholder="Tên Voucher"  required=""> 
         </div>
+
 
         <div class="form-radio">
             <label>Phân loại: </label>
-            <input type="radio" value="mien-phi" name="phanloai" id="mien-phi">
+            <input type="radio" value="mienphi" name="phanloai" id="mien-phi">
             <lable for="mien-phi">Miễn phí</label>
-            <input type="radio" value="doi-diem" name="phanloai" id="doi-diem">
+            <input type="radio" value="doidiem" name="phanloai" id="doi-diem">
             <label for="doi-diem">Đổi điểm</label> 
         </div>
         
         <div class="form-date">
             <label>Thời hạn sử dụng từ ngày: </label>
-
-            <input type="date" name="bday">
+            <input type="date" name="CreateDay" required="">
             <label>Đến ngày:</label>
-            <input type="date" name="bday">
+            <input type="date" name="ExpDay" required="">
             
         </div>
 
         <div class="form-text">
-            <input type="number" name="pointCost" min="0" max="10000" step="100"  placeholder="Giá (Point)">
+            <input type="number" name="PointCost" min="0" max="1000000" step="100"  placeholder="Giá mua(Point)" required="">
         </div>
 
         <div class="form-text">
-            <input type="text" name="discount" placeholder="Discount">
+            <input type="number" name="Discount" placeholder="Tỷ lệ giảm giá" required="">
         </div>
 
         <div class="form-text">
-            <input type="text" name="quantity" placeholder="Quantity">
+            <input type="number" name="Quantity" placeholder="Số lượng" required="">
         </div>
 
         <div class="form-text">
-            <input type="text" name="Code" placeholder="Code">
+            <input type="text" name="Code" placeholder="Mã Voucher" required="">
         </div>
 
         <div class="form-text">
-            <input type="text" name="partnerID" placeholder="PartnerID">
+                <input type="text" name="PartnerID" placeholder="PartnerID" required="">
         </div>
 
+        
         <div class="form-file">
             <label>Link ảnh</label>
-            <input type="file" name="imageLink">
+            <input type="file" name="ImageLink" accept="image/png, image/jpg" required="">
         </div>
-
-        <div class="form-text">
-            <input type="text" name="preContent" placeholder="Quảng cáo trong thẻ">
         
+        <div class="form-text">
+            <textarea id="ContentHeader" name="ContentHeader" placeholder="Tiêu đề" rows="3" cols="60" style="resize: none;" required=""></textarea> 
         </div>
 
         <div class="form-text">
-            <input type="text" name="contentHeader" placeholder="Tiêu đề">
+            <textarea id="Contents" name="Contents" placeholder="Nội dung" rows="10" cols="60" style="resize: none;" required=""></textarea> 
         </div>
 
         <div class="form-text">
-            <input type="text" name="voucherNote" placeholder="Mô tả giá trị ưu đãi">
+            <textarea id="PreContent" name="PreContent" placeholder="Quảng cáo trong thẻ" rows="3" cols="60" style="resize: none;" required=""></textarea> 
+        </div>
+
+
+        <div class="form-text">
+            <textarea id="VoucherNote" name="VoucherNote" placeholder="Mô tả giá trị ưu đãi" rows="2" cols="60" style="resize: none;" required=""></textarea> 
         </div>
         
         
 
         <button>Submit</button>
         <button>Cancel</button>
+        </div>
     </form>
-    
-</div>
 
-<<<<<<< HEAD:src/resources/views/addvoucher.hbs
+ </div>   
 
-=======
->>>>>>> 58d560b74381fcea88bb2ea169d3ef3b92ea596a:src/resources/views/vouchers/addvoucher.hbs
+
         
             

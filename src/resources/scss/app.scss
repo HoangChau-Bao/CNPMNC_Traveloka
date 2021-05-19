@@ -91,7 +91,7 @@ a {
 }
 .form-Them-Voucher {
   width: 600px;
-  height: 1280px;
+  height: 1550px;
   background: rgba(128, 128, 128, 0.476);
   border-radius: 100px;
   padding: 50px 50px;
@@ -161,6 +161,34 @@ a {
   border-top: 2px solid pink;
   cursor: pointer;
   padding-left: 12px;
+}
+.form-text select {
+  width: 100%;
+  height: 45px;
+  border-radius: 10px;
+  border-right: 2px pink;
+  border-left: 2px pink;
+  border-bottom: 2px solid pink;
+  border-top: 2px solid pink;
+  cursor: pointer;
+  padding-left: 12px;
+}
+
+.form-text textarea {
+  width: 100%;
+  border-radius: 10px;
+  border-right: 2px pink;
+  border-left: 2px pink;
+  border-bottom: 2px solid pink;
+  border-top: 2px solid pink;
+  cursor: pointer;
+  padding-left: 12px;
+}
+
+.add h1 {
+  font-size: 50px;
+  color: blue;
+  font-weight: bold;
 }
 
 //test

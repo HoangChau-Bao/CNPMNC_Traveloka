@@ -25,17 +25,17 @@
 
                 
                 {{#each vouchers}}
-                <div class="col-sm-6 col-lg-4">
+                <div class="col-sm-15 col-lg-5">
                     
                     <div class="card card-voucher-item" style="width: 28rem;">
                         <a href="/vouchers/{{this.slug}}">
-                            <img class="card-img-top" src="{{this.imageLink}}" alt="{{this.name}}">
+                            <img class="card-img-top" src="{{this.ImageLink}}" alt="{{this.Name}}">
                         </a>               
                         <div class="card-body">
                             <a href="/vouchers/{{this.slug}}">
-                                <h5 class="card-title">{{this.name}}</h5>
+                                <h5 class="card-title">{{this.Name}}</h5>
                             </a>                  
-                            <p class="card-text">{{this.preContent}}</p>
+                            <p class="card-text">{{this.PreContent}}</p>
                             <a href="/vouchers/{{this.slug}}" class="btn btn-primary">Xem ngay!</a>
                         </div>
                     </div>
