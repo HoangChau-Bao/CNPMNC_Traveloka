@@ -1,15 +1,87 @@
 
 
-
-
-    <div class="sidebar" style="padding-top: 120px;">
+    <div class="sidebar" style="padding-top: 150px; width: 10%;">
             <a href="#">Quản lý Voucher</a>
             <a href="#">Quản lý người dùng</a>
 	</div>
-	<div id="content" style="padding-top: 130px;">
-        
-        <h1>Voucher Manage</h1>
 
+    
+	<div id="content">
+        <div class="mt-4 mb-5">
+            <table class="table table-striped table-bordered mydatatable">
+            <thead>
+                <tr>
+                    <th>VoucherID</th>
+                    <th>Loại</th>
+                    <th>Tên</th>
+                    <th>Giá mua</th>
+                    <th>Tỉ lệ giảm (%)</th>
+                    <th>PartnerID</th>
+                    <th>Số lượng</th>
+                    <th >Ngày tạo</th>
+                    <th>Ngày hết hạn</th>
+                    <th>Trạng thái</th>
+                    <th>Bật/Tắt</th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each vouchers}}
+               <tr>
+                    <td>{{this.VoucherID}}</td>
+                    <td>{{this.CatalogID}}</td>
+                    <td>{{this.Name}}</td>
+                    <td>{{this.PointCost}}</td>
+                    <td>{{this.Discount}}</td>
+                    <td>{{this.PartnerID}}</td>
+                    <td>{{this.Quantity}}</td>
+                    <td>{{this.CreateDate}}</td>
+                    <td>{{this.ExpDate}}</td>
+                    <td>{{this.Status}}</td>
+                    <td>
+                        <form action="" method="POST"></form>
+                            <button class="btn btn-success"><i class="fa fa-toggle-on"></i></button>
+                        </form>   
+                    </td>
+                    <td>
+                        <form action="" method="POST"></form>
+                            <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                        </form>                      
+                    </td>
+                   
+                   
+               </tr>
+               {{/each}}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>VoucherID</th>
+                    <th>Loại</th>
+                    <th>Tên</th>
+                    <th>Giá mua</th>
+                    <th>Tỉ lệ giảm (%)</th>
+                    <th>PartnerID</th>
+                    <th>Số lượng</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày hết hạn</th>
+                    <th>Trạng thái</th>
+                    <th>Bât/Tắt</th>
+                    <th>Xóa</th>
+                </tr>
+                
+            </tfoot>
+        </table>
+        </div>
+        
     </div>
 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
 
+<script src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.js"></script>
+
+<script>
+    $('.mydatatable').DataTable();
+</script>

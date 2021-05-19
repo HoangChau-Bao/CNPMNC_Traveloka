@@ -34,12 +34,7 @@ class VoucherController {
   // [POST] /vouchers/store
   store(req, res, next) {
     let sampleFile = req.files.ImageLink;
-    let uploadPath =
-      'src/public/img/' +
-      req.body.Name +
-      req.body.PartnerID +
-      req.body.CreateDate +
-      sampleFile.name;
+    let uploadPath = 'src/public/img/' + req.body.CreateDate + sampleFile.name;
     sampleFile.mv(uploadPath, (err) => {
       if (err) return res.send(err);
     });
@@ -51,18 +46,16 @@ class VoucherController {
         throw err;
       } else {
         let request = new sql.Request();
-        let ImagePath =
-          '/img/' +
-          req.body.Name +
-          req.body.PartnerID +
-          req.body.CreateDate +
-          sampleFile.name;
+
+        let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+
         let slug = tools.toslug(req.body.Name);
-        let CreateDate = Date(req.body.CreateDate);
-        let ExpDate = new Date(req.body.ExpDate);
+        let code = tools.randomcode();
+        let CreateDate = req.body.CreateDate;
+        let ExpDate = req.body.ExpDate;
 
         let str =
-          'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug) ' +
+          'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
           "VALUES (N'" +
           req.body.PartnerID +
           req.body.Name +
@@ -79,7 +72,7 @@ class VoucherController {
           "', " +
           req.body.Quantity +
           ", N'" +
-          req.body.Code +
+          code +
           "', '" +
           ImagePath +
           "', N'" +
@@ -92,6 +85,12 @@ class VoucherController {
           req.body.VoucherNote +
           "', '" +
           slug +
+          "', '" +
+          CreateDate +
+          "', '" +
+          ExpDate +
+          "', '" +
+          req.body.MoneyDiscount +
           "');";
         request.query(str, (err, result) => {
           if (err) throw err;

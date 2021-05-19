@@ -86,12 +86,12 @@ a {
   align-items: center;
   text-align: center;
   width: 100vw;
-  height: 200vh;
+  height: 250vh;
   background: linear-gradient(to bottom right, var(--bg1), var(--bg2));
 }
 .form-Them-Voucher {
   width: 600px;
-  height: 1550px;
+  height: 1750px;
   background: rgba(128, 128, 128, 0.476);
   border-radius: 100px;
   padding: 50px 50px;
@@ -214,9 +214,9 @@ a {
   border-right: solid #8bd3f5;
   display: table-cell;
   width: 15%;
-  vertical-align: middle;
+  vertical-align: top;
   background-color: rgb(79, 192, 230);
-  padding-top: 100px;
+  padding-top: 150px;
 }
 
 .sidebar a {
@@ -238,7 +238,9 @@ a {
   display: table-cell;
   width: 85%;
   vertical-align: top;
-  padding: 10px 0 0 10px;
+  padding-top: 100px;
+  padding-left: 40px;
+  padding-right: 20px;
 }
 
 /* Toan bo */

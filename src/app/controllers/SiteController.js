@@ -7,7 +7,7 @@ class SiteController {
   //[GET] /#home
   index(req, res, next) {
     sql.connect(config, (err, result) => {
-      let str = 'SELECT * FROM Voucher';
+      let str = "SELECT * FROM Voucher Where Status='true'";
       let request = new sql.Request();
       if (err) {
         console.log('Error while querying database :- ' + err);

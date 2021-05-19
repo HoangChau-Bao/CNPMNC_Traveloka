@@ -31,4 +31,13 @@ module.exports = {
     // return
     return tmp;
   },
+
+  randomcode: function () {
+    // randomCode
+
+    var crypto = require('crypto');
+    var code = crypto.randomBytes(6).toString('base64').replace(/\W/g, '');
+    // return
+    return code;
+  },
 };
