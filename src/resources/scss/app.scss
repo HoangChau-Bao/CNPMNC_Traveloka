@@ -216,11 +216,14 @@ a {
   width: 15%;
   vertical-align: middle;
   background-color: rgb(79, 192, 230);
+  padding-top: 100px;
 }
 
 .sidebar a {
   display: block;
   padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
   color: rgba(20, 7, 7, 0.5);
   margin: 15px 0 0 0;
   text-decoration: none;
