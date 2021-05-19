@@ -113,7 +113,23 @@ a {
   background-size: 200%;
   transition: 0.5s;
 }
+.buttoncancel {
+  margin: 20px;
+  margin-top: 25px;
+  height: 50px;
+  width: 30%;
+  margin-bottom: 30px;
+  background: linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3));
+  border: none;
+  color: white;
+  border-radius: 50px;
+  background-size: 200%;
+  transition: 0.5s;
+}
 .form-Them-Voucher button:hover {
+  background-position: right;
+}
+.buttoncancel:hover {
   background-position: right;
 }
 .form-date {

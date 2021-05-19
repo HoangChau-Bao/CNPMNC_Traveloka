@@ -18,15 +18,6 @@
         <div class="form-text">
             <input type="text" name="Name" placeholder="Tên Voucher"  required=""> 
         </div>
-
-
-        <div class="form-radio">
-            <label>Phân loại: </label>
-            <input type="radio" value="mienphi" name="phanloai" id="mien-phi">
-            <lable for="mien-phi">Miễn phí</label>
-            <input type="radio" value="doidiem" name="phanloai" id="doi-diem">
-            <label for="doi-diem">Đổi điểm</label> 
-        </div>
         
         <div class="form-date">
             <label>Thời hạn sử dụng từ ngày: </label>
@@ -37,11 +28,11 @@
         </div>
 
         <div class="form-text">
-            <input type="number" name="PointCost" min="0" max="1000000" step="100"  placeholder="Giá mua(Point)" required="">
+            <input type="number" name="PointCost" min="0" max="1000000" step="100"  placeholder="Giá mua(Point) nếu là miễn phí thì nhập (0)" required="">
         </div>
 
         <div class="form-text">
-            <input type="number" name="Discount" placeholder="Tỷ lệ giảm giá" required="">
+            <input type="number" name="Discount" placeholder="Tỷ lệ giảm giá tính bằng %" required="">
         </div>
 
         <div class="form-text">
@@ -82,7 +73,7 @@
         
 
         <button>Submit</button>
-        <button>Cancel</button>
+        <input class="buttoncancel" name="buttoncancel" id="buttoncancel" type="button" onclick="window.location.replace('/')" value="Cancel" />
         </div>
     </form>
 
