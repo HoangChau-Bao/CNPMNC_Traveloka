@@ -33,26 +33,70 @@ class VoucherController {
 
   // [POST] /vouchers/store
   store(req, res, next) {
+    let sampleFile = req.files.ImageLink;
+    let uploadPath =
+      'src/public/img/' +
+      req.body.Name +
+      req.body.PartnerID +
+      req.body.CreateDate +
+      sampleFile.name;
+    sampleFile.mv(uploadPath, (err) => {
+      if (err) return res.send(err);
+    });
+
     sql.connect(config, (err, result) => {
       let request = new sql.Request();
       if (err) {
         console.log('Error while querying database :- ' + err);
         throw err;
       } else {
-        res.json(req.body);
-        //let request = new sql.Request();
-        //let slug = tools.toslug(req.body.Name);
-        //let CreateDate = Date(req.body.CreateDate);
-        //let ExpDate = new Date(req.body.ExpDate);
+        let request = new sql.Request();
+        let ImagePath =
+          '/img/' +
+          req.body.Name +
+          req.body.PartnerID +
+          req.body.CreateDate +
+          sampleFile.name;
+        let slug = tools.toslug(req.body.Name);
+        let CreateDate = Date(req.body.CreateDate);
+        let ExpDate = new Date(req.body.ExpDate);
 
-        // let str = "INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug) "
-        //   + "VALUES (N'"+req.body.VoucherID+"', N'"+req.body.CatalogID+"', N'"+req.body.Name+"', "+req.body.PointCost+", "+req.body.Discount+", '"+req.body.PartnerID+"', "+req.body.Quantity+", N'"+req.body.Code+"', '"+req.body.ImageLink+"', N'"+req.body.ContentHeader+"', N'"+req.body.PreContent+"', N'"+req.body.Contents+"', N'"+req.body.VoucherNote+"', '"+slug+"');"
-        // request.query(str,(err,result) => {
-        //   if(err)
-        //     throw err;
-        //   else
-        //     res.redirect('/');
-        // });
+        let str =
+          'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug) ' +
+          "VALUES (N'" +
+          req.body.PartnerID +
+          req.body.Name +
+          "', N'" +
+          req.body.CatalogID +
+          "', N'" +
+          req.body.Name +
+          "', " +
+          req.body.PointCost +
+          ', ' +
+          req.body.Discount +
+          ", '" +
+          req.body.PartnerID +
+          "', " +
+          req.body.Quantity +
+          ", N'" +
+          req.body.Code +
+          "', '" +
+          ImagePath +
+          "', N'" +
+          req.body.ContentHeader +
+          "', N'" +
+          req.body.PreContent +
+          "', N'" +
+          req.body.Contents +
+          "', N'" +
+          req.body.VoucherNote +
+          "', '" +
+          slug +
+          "');";
+        request.query(str, (err, result) => {
+          if (err) throw err;
+          else res.redirect('/');
+        });
       }
     });
   }
