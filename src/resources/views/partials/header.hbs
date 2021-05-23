@@ -38,15 +38,22 @@
         <li class="nav-item">
           <a href="/" class="nav-link">Trang chủ</a>
         </li>
-
-        <li class="nav-item">
-          <a href="/vouchers/addvoucher" class="nav-link">Add Voucher</a>
-        </li>
-
+        
         <li class="nav-item">
           <a href="/admin/vouchermanage" class="nav-link">Admin Page</a>
         </li>
-     
+
+        <li class="nav-item">
+          <a href="/user/profile" class="nav-link">Profile</a>
+        </li>
+
+        {{#if isAuthenticated}}
+
+        <li class="nav-item">
+          <a href="/user/logout" class="nav-link">Đăng xuất</a>
+        </li>
+
+        {{else}}
         <li class="nav-item">
           <a href="/user/register" class="nav-link">Đăng ký</a>
         </li>
@@ -54,6 +61,8 @@
         <li class="nav-item">
           <a href="/user/login" class="nav-link">Đăng nhập</a>
         </li>
+        {{/if}}
+        
       </ul>
      
     </div>

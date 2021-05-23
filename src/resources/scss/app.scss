@@ -95,7 +95,7 @@ a {
   background: rgba(128, 128, 128, 0.476);
   border-radius: 100px;
   padding: 50px 50px;
-  color: rgb(218, 76, 175);
+  color: red;
 }
 .form-Them-Voucher h1 {
   margin-bottom: 30px;
@@ -238,7 +238,7 @@ a {
   display: table-cell;
   width: 85%;
   vertical-align: top;
-  padding-top: 100px;
+  padding-top: 20px;
   padding-left: 40px;
   padding-right: 20px;
 }
@@ -457,4 +457,9 @@ a {
     margin-right: 0;
     font-weight: 600;
   }
+}
+
+//collapse
+.collapse a {
+  font-weight: bold;
 }

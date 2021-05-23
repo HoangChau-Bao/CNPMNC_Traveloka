@@ -1,1 +1,60 @@
-<h1>register</h1>
+<div class="containeradd" style="height: 1100px;">
+
+    <form class="form-Them-Voucher" method="POST" action="/user/registerstore" enctype="multipart/form-data" style="height: 750px;">
+
+        <h1 style="color:#4bcdf8; font-weight: bold; font-size: 50px; border:thin">Đăng ký mới</h1>
+
+        {{#if messages}}
+            {{messages}}
+        {{/if}}
+
+        <div class="add" style="text-align: left;">     
+
+        <div class="form-text">
+            <label>Tên tài khoản:</label>
+            <input type="text" name="TaiKhoan" placeholder="Tên tài khoản..."  required="" autocomplete="off" minlength="5" maxlength="30"> 
+        </div> 
+
+        <div class="form-text">
+            <label>Mật khẩu:</label>
+            <input type="password" name="MatKhau" id="MatKhau" placeholder="Mật khẩu..."  required="" autocomplete="off" minlength="5" maxlength="30">            
+        </div>
+        <div>
+            <i class="fa fa-eye" aria-hidden="true" style="color: black;"></i><input type="checkbox" onclick="myFunction()" style="text-align: left;">
+        </div>
+
+        <div class="form-text">
+            <label>Họ tên:</label>
+            <input type="text" name="Hoten" placeholder="Họ tên..."  required="" autocomplete="off" > 
+        </div>
+
+        <div class="form-text">
+            <label>Số điện thoại:</label>
+            <input type="tel" id="SoDienThoai" name="SoDienThoai" placeholder="Số điện thoại..." autocomplete="off" minlength="10" maxlength="10">
+        </div>
+
+        <div class="form-text">
+            <label>Địa chỉ:</label>
+            <input type="text" name="DiaChi" placeholder="Địa chỉ..."  required="" autocomplete="off"> 
+        </div>
+
+        <div>  
+        <button style="width: 200px;">Đăng ký</button>
+        <input class="buttoncancel" name="buttoncancel" id="buttoncancel" type="button" onclick="window.location.replace('/')" value="Hủy" style="width: 200px;"/>
+        </div>
+    </form>
+
+ </div>   
+
+
+        
+<script>
+    function myFunction() {
+        var x = document.getElementById("MatKhau");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>       

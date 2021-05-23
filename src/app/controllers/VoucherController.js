@@ -3,7 +3,7 @@ const sql = require('mssql');
 const tools = require('../../util/tools');
 
 class VoucherController {
-  //[GET] /vouchers/:slug
+  //[GET] /vouchers/:slug   *vào trang chi tiết voucher
   show(req, res, next) {
     sql.connect(config, (err, result) => {
       let str =
@@ -31,7 +31,7 @@ class VoucherController {
     res.render('vouchers/addvoucher');
   }
 
-  // [POST] /vouchers/store
+  // [POST] /vouchers/store  *lưu voucher
   store(req, res, next) {
     let sampleFile = req.files.ImageLink;
     let uploadPath = 'src/public/img/' + req.body.CreateDate + sampleFile.name;

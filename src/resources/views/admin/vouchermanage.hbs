@@ -1,13 +1,24 @@
 
 
     <div class="sidebar" style="padding-top: 150px; width: 10%;">
-            <a href="#">Quản lý Voucher</a>
+            <a href="/admin/vouchermanage">Quản lý Voucher</a>
             <a href="#">Quản lý người dùng</a>
 	</div>
 
     
-	<div id="content">
+	<div id="content" style="padding-top: 170px;">
+        
         <div class="mt-4 mb-5">
+
+
+            <form action="/vouchers/addvoucher" method="GET">
+                <button class="btn btn-success">              
+                    <span class="text-gradient"><i class="fa fa-plus-circle"></i> Thêm voucher</span>
+                </button>
+            </form>
+            
+           
+            
             <table class="table table-striped table-bordered mydatatable">
             <thead>
                 <tr>
@@ -27,30 +38,35 @@
             </thead>
             <tbody>
                 {{#each vouchers}}
-               <tr>
-                    <td>{{this.VoucherID}}</td>
-                    <td>{{this.CatalogID}}</td>
-                    <td>{{this.Name}}</td>
-                    <td>{{this.PointCost}}</td>
-                    <td>{{this.Discount}}</td>
-                    <td>{{this.PartnerID}}</td>
-                    <td>{{this.Quantity}}</td>
-                    <td>{{this.CreateDate}}</td>
-                    <td>{{this.ExpDate}}</td>
-                    <td>{{this.Status}}</td>
-                    <td>
-                        <form action="" method="POST"></form>
-                            <button class="btn btn-success"><i class="fa fa-toggle-on"></i></button>
-                        </form>   
-                    </td>
-                    <td>
-                        <form action="" method="POST"></form>
-                            <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                        </form>                      
-                    </td>
-                   
-                   
-               </tr>
+                    
+                        <tr>    
+                            <form action="/admin/vouchermanage/changestatus" method="POST">        
+                                <input type="hidden" name="Code" value="{{this.Code}}">
+                                <input type="hidden" name="Status" value="{{this.Status}}">
+                                <td>{{this.VoucherID}}</td>
+                                <td>{{this.CatalogID}}</td>
+                                <td>{{this.Name}}</td>
+                                <td>{{this.PointCost}}</td>
+                                <td>{{this.Discount}}</td>
+                                <td>{{this.PartnerID}}</td>
+                                <td>{{this.Quantity}}</td>
+                                <td>{{this.CreateDate}}</td>
+                                <td>{{this.ExpDate}}</td>
+                                <td>{{this.Status}}</td>
+                                <td>                        
+                                    <button class="btn btn-success"><i class="fa fa-toggle-on"></i></button>                         
+                                </td> 
+                                </form>   
+                            <form action="/admin/vouchermanage/deletevoucher" method="POST">
+                                <input type="hidden" name="Code" value="{{this.Code}}">
+                                <input type="hidden" name="Status" value="{{this.Status}}">
+                                <td>
+                                    <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>  
+                            </form>   
+                                                                           
+                        </tr>
+                    
                {{/each}}
             </tbody>
             <tfoot>
