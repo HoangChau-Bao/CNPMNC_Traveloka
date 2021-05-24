@@ -26,8 +26,25 @@ class UserController {
 
   //[GET] /user/profile
   profile(req, res) {
-    res.send(req.user);
-    //res.render('user/profile');
+    sql.connect(config, (err, result) => {
+      let taikhoan = req.user.TaiKhoan;
+      let str = "SELECT * FROM NguoiDung Where TaiKhoan='" + taikhoan + "'";
+      let request = new sql.Request();
+      if (err) {
+        console.log('Error while querying database :- ' + err);
+        throw err;
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            console.log('ERROR ' + err);
+            throw err;
+          } else {
+            res.render('user/profile', { user: result.recordset });
+            //res.json(result);
+          }
+        });
+      }
+    });
   }
 
   //[POST] /user/register

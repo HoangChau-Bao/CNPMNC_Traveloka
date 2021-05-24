@@ -33,6 +33,7 @@ class VoucherController {
 
   // [POST] /vouchers/store  *lưu voucher
   store(req, res, next) {
+    //res.send(req.body);
     let sampleFile = req.files.ImageLink;
     let uploadPath = 'src/public/img/' + req.body.CreateDate + sampleFile.name;
     sampleFile.mv(uploadPath, (err) => {
@@ -53,7 +54,6 @@ class VoucherController {
         let code = tools.randomcode();
         let CreateDate = req.body.CreateDate;
         let ExpDate = req.body.ExpDate;
-
         let str =
           'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
           "VALUES (N'" +
