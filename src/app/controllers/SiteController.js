@@ -7,6 +7,15 @@ class SiteController {
   //[GET] /#home
   index(req, res, next) {
     sql.connect(config, (err, result) => {
+      let str1 = "UPDATE Voucher SET Status = 'false' WHERE Quantity = 0";
+      let request1 = new sql.Request();
+      request1.query(str1, (err, result) => {
+        if (err) {
+          console.log('Error while querying database :- ' + err);
+          throw err;
+        }
+      });
+
       let str = "SELECT * FROM Voucher Where Status='true'";
       let request = new sql.Request();
       if (err) {

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -43,11 +44,11 @@
           <a href="/admin/vouchermanage" class="nav-link">Admin Page</a>
         </li>
 
+        {{#if isAuthenticated}}
+
         <li class="nav-item">
           <a href="/user/profile" class="nav-link">Profile</a>
         </li>
-
-        {{#if isAuthenticated}}
 
         <li class="nav-item">
           <a href="/user/logout" class="nav-link">Đăng xuất</a>

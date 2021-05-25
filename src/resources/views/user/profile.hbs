@@ -2,22 +2,54 @@
 
     <div class="sidebar" style="padding-top: 150px; width: 20%;">
             <a href="/user/profile">Thông tin người dùng</a>
-            <a href="/user/profile/khovoucher">Kho voucher</a>
+            <a href="/user/voucherwarehouse">Kho voucher</a>
 	</div>
 
     
-	<div id="content" style="padding-top: 170px;">
-        <h1 style="font-weight: bold; padding-left: 600px;">Thông tin người dùng</h1>
+	<div id="content" style="padding-top: 170px; padding-bottom: 50px; padding-left: 200px;">
+        <h1 style="font-weight: bold; padding-left: 300px; padding-bottom: 50px;">Thông tin người dùng</h1>
         {{#each user}}
-            <table>
-                <tr>
-                    <th>Tài khoản:</th>
-                    <th><input type="text" value="{{this.TaiKhoan}}" readonly></th>
-                </tr>
-                <tr>
-                    <th>3</th>
-                    <th>4</th>
-                </tr>
-            </table>
+                <form action="/user/profileupdate" method="post" class="form-control" style="padding-bottom: 550px; width: 1000px;">
+                    <input type="hidden" name="TaiKhoan" value="{{TaiKhoan}}" >
+                    <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Họ tên</label>
+                        <input type="text" name="HoTen" class="form-control" value="{{HoTen}}">
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                        <input type="tel" class="form-control" id="SoDienThoai" name="SoDienThoai" placeholder="Số điện thoại..." autocomplete="off" minlength="10" maxlength="10" value="{{SoDienThoai}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Điểm hiện có</label>
+                            <input type="number" name="DiemHienTai" class="form-control" value="{{DiemHienTai}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Điểm tổng</label>
+                            <input type="number" name="DiemTong" class="form-control" value="{{DiemTong}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Địa chỉ</label>
+                            <textarea class="form-control" name="DiaChi" rows="4">{{DiaChi}}</textarea>
+                        </div>
+                    </div>
+                <div class="col-md-12">
+                    <button class="btn btn-primary">Update</button>
+                    <input class="btn btn-basic" name="buttoncancel" id="buttoncancel" type="button" onclick="window.location.replace('/user/profile')" value="Cancel" />
+                </div>  
+                </form>
+                
         {{/each}}
     </div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

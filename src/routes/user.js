@@ -23,7 +23,9 @@ router.get('/test', userController.test);
 router.get('/logout', userController.logout);
 
 router.get('/profile', userController.profile);
-
+router.get('/voucherwarehouse', userController.voucherwarehouse);
 router.post('/registerstore', userController.registerstore);
+router.post('/profileupdate', userController.profileupdate);
+router.post('/buyvoucher', userController.buyvoucher);
 
 module.exports = router;

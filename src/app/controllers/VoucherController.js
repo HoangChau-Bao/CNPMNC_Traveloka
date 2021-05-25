@@ -1,6 +1,7 @@
 const config = require('../../config/db/dbconfig');
 const sql = require('mssql');
 const tools = require('../../util/tools');
+const { renderSync } = require('node-sass');
 
 class VoucherController {
   //[GET] /vouchers/:slug   *vào trang chi tiết voucher
@@ -18,8 +19,15 @@ class VoucherController {
             console.log('ERROR ' + err);
             throw err;
           } else {
-            console.log(result.recordset);
-            res.render('vouchers/show', { voucher: result.recordset });
+            if (result.recordset[0].Status == true) {
+              console.log(req.flash('thongbao'));
+              res.render('vouchers/show', {
+                thongbao: req.flash('thongbao'),
+                voucher: result.recordset,
+              });
+            } else {
+              res.send('404 !');
+            }
           }
         });
       }

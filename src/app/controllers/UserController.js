@@ -1,5 +1,7 @@
 const config = require('../../config/db/dbconfig');
 const sql = require('mssql');
+const { user } = require('../../config/db/dbconfig');
+const { renderSync } = require('node-sass');
 
 class UserController {
   //[GET] /user/login
@@ -41,6 +43,41 @@ class UserController {
           } else {
             res.render('user/profile', { user: result.recordset });
             //res.json(result);
+          }
+        });
+      }
+    });
+  }
+
+  //[POST] /user/profileupdate
+  profileupdate(req, res) {
+    console.log(req.body);
+    sql.connect(config, (err, result) => {
+      let taikhoan = req.body.TaiKhoan;
+      let hoten = req.body.HoTen;
+      let sdt = req.body.SoDienThoai;
+      let diachi = req.body.DiaChi;
+      let str =
+        "UPDATE NguoiDung SET HoTen = N'" +
+        hoten +
+        "', SoDienThoai = '" +
+        sdt +
+        "', DiaChi = N'" +
+        diachi +
+        "' WHERE TaiKhoan = '" +
+        taikhoan +
+        "';";
+      let request = new sql.Request();
+      if (err) {
+        console.log('Error while querying database :- ' + err);
+        throw err;
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            console.log('ERROR ' + err);
+            throw err;
+          } else {
+            res.redirect('/user/profile');
           }
         });
       }
@@ -115,6 +152,126 @@ class UserController {
             }
           }
         });
+      }
+    });
+  }
+
+  //[GET]  /user/voucherwarehouse
+  voucherwarehouse(req, res) {
+    sql.connect(config, (err, result) => {
+      let taikhoan = req.user.TaiKhoan;
+      let str = "SELECT * FROM CTVoucher Where TaiKhoan='" + taikhoan + "'";
+      let request = new sql.Request();
+      if (err) {
+        console.log('Error while querying database :- ' + err);
+        throw err;
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            console.log('ERROR ' + err);
+            throw err;
+          } else {
+            res.render('user/voucherwarehouse', { vouchers: result.recordset });
+            //res.json(result);
+          }
+        });
+      }
+    });
+  }
+
+  //[POST] /user/buyvoucher
+  buyvoucher(req, res) {
+    //res.json(req.user);
+    sql.connect(config, (err, result) => {
+      let taikhoan = req.user.TaiKhoan;
+      let voucherid = req.body._id;
+      let catalogid = req.body.CatalogID;
+      let tenvoucher = req.body.Name;
+      let code = req.body.Code;
+      let slug = req.body.slug;
+      let pointcost = req.body.PointCost;
+
+      //console.log(parseInt(req.user.DiemHienTai,10) - parseInt(pointcost,10));
+
+      if (parseInt(req.user.DiemHienTai, 10) - parseInt(pointcost, 10) >= 0) {
+        let str =
+          'INSERT INTO CTVoucher (Voucher_id, TaiKhoan, Code, CatalogID, TenVoucher, voucherslug)' +
+          " VALUES ('" +
+          voucherid +
+          "', '" +
+          taikhoan +
+          "', '" +
+          code +
+          "', '" +
+          catalogid +
+          "', N'" +
+          tenvoucher +
+          "', '" +
+          slug +
+          "');";
+        let request = new sql.Request();
+        if (err) {
+          console.log('Error while querying database :- ' + err);
+          throw err;
+        } else {
+          request.query(str, function (err, result) {
+            if (err) {
+              console.log('ERROR ' + err);
+              throw err;
+            } else {
+              let x =
+                parseInt(req.user.DiemHienTai, 10) - parseInt(pointcost, 10);
+              let str =
+                "UPDATE NguoiDung SET DiemHienTai = '" +
+                x +
+                "' WHERE TaiKhoan = '" +
+                req.user.TaiKhoan +
+                "';";
+              let request = new sql.Request();
+              request.query(str, function (err, result) {
+                if (err) {
+                  console.log('ERROR ' + err);
+                  throw err;
+                } else {
+                  let str =
+                    "SELECT Quantity FROM Voucher WHERE _id = '" +
+                    voucherid +
+                    "'";
+                  let request = new sql.Request();
+                  request.query(str, function (err, result) {
+                    if (err) {
+                      console.log('ERROR ' + err);
+                      throw err;
+                    } else {
+                      let x = parseInt(result.recordset[0].Quantity, 10) - 1;
+                      let str =
+                        "UPDATE Voucher SET Quantity = '" +
+                        x +
+                        "' WHERE _id = '" +
+                        voucherid +
+                        "';";
+                      let request = new sql.Request();
+                      request.query(str, function (err, result) {
+                        if (err) {
+                          console.log('ERROR ' + err);
+                          throw err;
+                        } else {
+                          req.flash('thongbao', 'Mua voucher thành công');
+                          res.locals.thongbao = req.flash('thongbao');
+                          res.redirect('/');
+                        }
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      } else {
+        req.flash('thongbao', 'Bạn không đủ điểm để mua voucher');
+        res.locals.thongbao = req.flash('thongbao');
+        res.redirect('/vouchers/' + slug);
       }
     });
   }

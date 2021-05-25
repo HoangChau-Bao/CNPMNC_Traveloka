@@ -37,12 +37,12 @@ app.use(
   }),
 );
 
-//flash
-app.use(flash());
-
 //passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+//flash
+app.use(flash());
 
 //dynamic header
 app.use((req, res, next) => {

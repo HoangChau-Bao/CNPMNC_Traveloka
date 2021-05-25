@@ -21,7 +21,9 @@ let initPassportLocal = () => {
             let str =
               "SELECT * FROM NguoiDung WHERE TaiKhoan= '" +
               TaiKhoan +
-              "' AND Status='true'";
+              "' AND Status='true' AND MatKhau='" +
+              MatKhau +
+              "'";
             let request = new sql.Request();
             request.query(str, function (err, NguoiDung) {
               taikhoan = '';
