@@ -26,6 +26,7 @@
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1"
   },
+  
   "scripts": {
     "makeup": "lint-staged",
     "start": "nodemon --inspect src/index.js",
@@ -57,3 +58,4 @@
   },
   "homepage": "https://github.com/HoangChau-Bao/CNPMNC_Traveloka#readme"
 }
+
