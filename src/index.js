@@ -68,10 +68,10 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 //     res.render('home');
 // })
 
-//route(app);
-app.get('/', (req, res) => {
-  res.send('Test is OK');
-});
+route(app);
+// app.get('/', (req, res) => {
+//   res.send('Test is OK');
+// });
 
 app.listen(port, () => {
   console.log(`App listening at port:${port}`);
