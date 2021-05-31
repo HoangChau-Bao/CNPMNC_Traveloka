@@ -1,23 +1,22 @@
-const config = {
-  server: 'DESKTOP-O0HOLC8',
-  user: 'sa',
-  password: 'sa',
-  database: 'QLVoucher',
-  option: {
-    instancename: 'SQLEXPRESS',
-    port: 497671,
-  },
-};
-
 // const config = {
-//   server: 'qlvoucher.database.windows.net',
-//   user: 'linphe297',
-//   password: 'M@sterne9d',
+//   server: 'DESKTOP-O0HOLC8',
+//   user: 'sa',
+//   password: 'sa',
 //   database: 'QLVoucher',
 //   option: {
-//     port: 3306,
-//     ssl: true,
+//     instancename: 'SQLEXPRESS',
+//     port: 497671,
 //   },
 // };
+
+const config = {
+  server: 'cnpmnc.cuzvkz1ctanw.us-west-2.rds.amazonaws.com',
+  user: 'sa',
+  password: 'hoang0402',
+  database: 'QLVoucher',
+  option: {
+    port: 1433,
+  },
+};
 
 module.exports = config;
