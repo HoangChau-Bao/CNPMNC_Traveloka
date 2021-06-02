@@ -1,3 +1,5 @@
+
+
 <div class="containeradd">
 
     <form class="form-Them-Voucher" method="POST" action="/vouchers/store" enctype="multipart/form-data" >
@@ -6,7 +8,9 @@
 
         <div class="add" style="text-align: left;">
         
-        
+        {{#if messages}}
+            {{messages}}
+        {{/if}}
         
         <div class="form-text">
             <label>Loại voucher:</label>
@@ -26,9 +30,9 @@
         
         <div class="form-date">
             <label>Thời hạn sử dụng từ ngày: </label>
-            <input type="date" name="CreateDate" required="">
+            <input type="date" name="CreateDate" id="CreateDate" required="">
             <label>Đến ngày:</label>
-            <input type="date" name="ExpDate" required="">
+            <input type="date" name="ExpDate" id="ExpDate" required="">
             
         </div>
 
@@ -51,11 +55,6 @@
             <label>Số lượng:</label>
             <input type="number" name="Quantity" placeholder="Số lượng" required="">
         </div>
-
-        <div class="form-text">
-                <input type="text" name="PartnerID" placeholder="PartnerID" required="">
-        </div>
-
         
         <div class="form-file">
             <label>Link ảnh</label>
@@ -88,10 +87,5 @@
         <button style="width: 200px;">Submit</button>
         <input class="buttoncancel" name="buttoncancel" id="buttoncancel" type="button" onclick="window.location.replace('/')" value="Cancel" />
         </div>
-    </form>
-
+    </form>  
  </div>   
-
-
-        
-            

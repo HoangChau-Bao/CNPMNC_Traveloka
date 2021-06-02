@@ -5,6 +5,7 @@ const voucherController = require('../app/controllers/VoucherController');
 router.get('/addvoucher', voucherController.add);
 
 router.post('/store', voucherController.store);
+router.post('/deletevoucher', voucherController.deletevoucher);
 
 router.get('/:slug', voucherController.show);
 

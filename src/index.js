@@ -68,6 +68,15 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 //     res.render('home');
 // })
 
+//Schedule task app sẽ chạy query update kiểm tra ngày voucher còn hạn hay đã đén ngày mở bán chưa vào lúc 0:01AM
+const sqlschedule = require('./util/sqlschedule');
+var cron = require('node-cron');
+
+cron.schedule('39 23 * * *', () => {
+  sqlschedule.CheckDateSQLOK();
+  sqlschedule.CheckDateSQLNotOK();
+});
+
 route(app);
 // app.get('/', (req, res) => {
 //   res.send('Test is OK');

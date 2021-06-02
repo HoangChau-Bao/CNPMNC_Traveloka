@@ -9,7 +9,6 @@ router.get('/usermanage', adminController.usermanage);
 router.get('/usermanage/adduser', adminController.adduser);
 router.post('/usermanage/adduserstore', adminController.adduserstore);
 router.post('/vouchermanage/changestatus', adminController.changestatus);
-router.post('/vouchermanage/deletevoucher', adminController.deletevoucher);
 router.post('/usermanage/changestatususer', adminController.changestatususer);
 
 module.exports = router;

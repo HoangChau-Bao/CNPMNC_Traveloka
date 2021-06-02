@@ -6,34 +6,34 @@ class AdminController {
   vouchermanage(req, res) {
     //res.render('admin/vouchermanage');
 
-    // if (req.isAuthenticated()) {
-    //   if (req.user.ChucVu == true) {
-    sql.connect(config, (err, result) => {
-      let str = 'SELECT * FROM Voucher';
-      let request = new sql.Request();
-      if (err) {
-        console.log('Error while querying database :- ' + err);
-        throw err;
-      } else {
-        request.query(str, function (err, result) {
+    if (req.isAuthenticated()) {
+      if (req.user.ChucVu == true) {
+        sql.connect(config, (err, result) => {
+          let str = 'SELECT * FROM Voucher';
+          let request = new sql.Request();
           if (err) {
-            console.log('ERROR ' + err);
+            console.log('Error while querying database :- ' + err);
             throw err;
           } else {
-            res.render('admin/vouchermanage', {
-              vouchers: result.recordset,
+            request.query(str, function (err, result) {
+              if (err) {
+                console.log('ERROR ' + err);
+                throw err;
+              } else {
+                res.render('admin/vouchermanage', {
+                  vouchers: result.recordset,
+                });
+                //res.json(result);
+              }
             });
-            //res.json(result);
           }
         });
+      } else {
+        res.redirect('/');
       }
-    });
-    //   } else {
-    //     res.redirect('/');
-    //   }
-    // } else {
-    //   res.redirect('/');
-    // }
+    } else {
+      res.redirect('/');
+    }
   }
 
   //[POST] /admin/vouchermanage/changestatus
@@ -75,42 +75,36 @@ class AdminController {
     });
   }
 
-  //[POST] /admin/vouchermanage/deletevoucher
-  deletevoucher(req, res) {
-    console.log('Delete voucher');
-    res.send(req.body);
-  }
-
   //[GET] /admin/usermanage
   usermanage(req, res) {
-    // if (req.isAuthenticated()) {
-    //   if (req.user.ChucVu == true) {
-    sql.connect(config, (err, result) => {
-      let str = 'SELECT * FROM NguoiDung';
-      let request = new sql.Request();
-      if (err) {
-        console.log('Error while querying database :- ' + err);
-        throw err;
-      } else {
-        request.query(str, function (err, result) {
+    if (req.isAuthenticated()) {
+      if (req.user.ChucVu == true) {
+        sql.connect(config, (err, result) => {
+          let str = 'SELECT * FROM NguoiDung';
+          let request = new sql.Request();
           if (err) {
-            console.log('ERROR ' + err);
+            console.log('Error while querying database :- ' + err);
             throw err;
           } else {
-            res.render('admin/usermanage', {
-              user: result.recordset,
+            request.query(str, function (err, result) {
+              if (err) {
+                console.log('ERROR ' + err);
+                throw err;
+              } else {
+                res.render('admin/usermanage', {
+                  user: result.recordset,
+                });
+                //res.json(result);
+              }
             });
-            //res.json(result);
           }
         });
+      } else {
+        res.redirect('/');
       }
-    });
-    //   } else {
-    //     res.redirect('/');
-    //   }
-    // } else {
-    //   res.redirect('/');
-    // }
+    } else {
+      res.redirect('/');
+    }
   }
 
   //[GET] /admin/usermanager/adduser
