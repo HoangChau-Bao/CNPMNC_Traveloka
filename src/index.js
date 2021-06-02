@@ -72,7 +72,7 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 const sqlschedule = require('./util/sqlschedule');
 var cron = require('node-cron');
 
-cron.schedule('39 23 * * *', () => {
+cron.schedule('1 0 * * *', () => {
   sqlschedule.CheckDateSQLOK();
   sqlschedule.CheckDateSQLNotOK();
 });

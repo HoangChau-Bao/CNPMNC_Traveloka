@@ -4,7 +4,7 @@ module.exports = {
   CheckDateSQLOK: function () {
     sql.connect(config, (err, result) => {
       let str =
-        'update Voucher set Status = 1 WHERE Getdate() > CONVERT(DATETIME, CreateDate) AND Getdate() < CONVERT(DATETIME, ExpDate)';
+        'update Voucher set Status = 1 WHERE Getdate() > CONVERT(DATETIME, CreateDate) AND Getdate() < CONVERT(DATETIME, ExpDate) AND NOT Quantity = 0';
       let request = new sql.Request();
       if (err) {
         console.log('Error while querying database :- ' + err);
@@ -26,7 +26,7 @@ module.exports = {
   CheckDateSQLNotOK: function () {
     sql.connect(config, (err, result) => {
       let str =
-        'update Voucher set Status = 0 WHERE Getdate() < CONVERT(DATETIME, CreateDate) OR Getdate() > CONVERT(DATETIME, ExpDate)';
+        'update Voucher set Status = 0 WHERE Getdate() < CONVERT(DATETIME, CreateDate) OR Getdate() > CONVERT(DATETIME, ExpDate) AND Quantity = 0';
       let request = new sql.Request();
       if (err) {
         console.log('Error while querying database :- ' + err);

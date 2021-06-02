@@ -1,52 +1,50 @@
 const config = require('../../config/db/dbconfig');
 const sql = require('mssql');
+const sqlcheck = require('../../util/sqlschedule');
 
 class AdminController {
   //[GET] /admin/vouchermanage
   vouchermanage(req, res) {
     //res.render('admin/vouchermanage');
 
-    if (req.isAuthenticated()) {
-      if (req.user.ChucVu == true) {
-        sql.connect(config, (err, result) => {
-          let str = 'SELECT * FROM Voucher';
-          let request = new sql.Request();
+    // if (req.isAuthenticated()) {
+    //   if (req.user.ChucVu == true) {
+    sql.connect(config, (err, result) => {
+      let str = 'SELECT * FROM Voucher';
+      let request = new sql.Request();
+      if (err) {
+        console.log('Error while querying database :- ' + err);
+        throw err;
+      } else {
+        request.query(str, function (err, result) {
           if (err) {
-            console.log('Error while querying database :- ' + err);
+            console.log('ERROR ' + err);
             throw err;
           } else {
-            request.query(str, function (err, result) {
-              if (err) {
-                console.log('ERROR ' + err);
-                throw err;
-              } else {
-                res.render('admin/vouchermanage', {
-                  vouchers: result.recordset,
-                });
-                //res.json(result);
-              }
+            res.render('admin/vouchermanage', {
+              vouchers: result.recordset,
             });
+            //res.json(result);
           }
         });
-      } else {
-        res.redirect('/');
       }
-    } else {
-      res.redirect('/');
-    }
+    });
+    //   } else {
+    //     res.redirect('/');
+    //   }
+    // } else {
+    //   res.redirect('/');
+    // }
   }
 
   //[POST] /admin/vouchermanage/changestatus
   changestatus(req, res) {
+    console.log(req.body);
     sql.connect(config, (err, result) => {
       let str =
-        "UPDATE Voucher SET Status = 'false' WHERE Code= '" +
-        req.body.Code +
-        "';";
+        "UPDATE Voucher SET Status = 'false' WHERE _id= " + req.body._id + ';';
       let str2 =
-        "UPDATE Voucher SET Status = 'true' WHERE Code= '" +
-        req.body.Code +
-        "';";
+        "UPDATE Voucher SET Status = 'true' WHERE _id= " + req.body._id + ';';
       let request = new sql.Request();
       if (err) {
         console.log('Error while querying database :- ' + err);
@@ -77,34 +75,34 @@ class AdminController {
 
   //[GET] /admin/usermanage
   usermanage(req, res) {
-    if (req.isAuthenticated()) {
-      if (req.user.ChucVu == true) {
-        sql.connect(config, (err, result) => {
-          let str = 'SELECT * FROM NguoiDung';
-          let request = new sql.Request();
+    // if (req.isAuthenticated()) {
+    //   if (req.user.ChucVu == true) {
+    sql.connect(config, (err, result) => {
+      let str = 'SELECT * FROM NguoiDung';
+      let request = new sql.Request();
+      if (err) {
+        console.log('Error while querying database :- ' + err);
+        throw err;
+      } else {
+        request.query(str, function (err, result) {
           if (err) {
-            console.log('Error while querying database :- ' + err);
+            console.log('ERROR ' + err);
             throw err;
           } else {
-            request.query(str, function (err, result) {
-              if (err) {
-                console.log('ERROR ' + err);
-                throw err;
-              } else {
-                res.render('admin/usermanage', {
-                  user: result.recordset,
-                });
-                //res.json(result);
-              }
+            res.render('admin/usermanage', {
+              user: result.recordset,
             });
+            //res.json(result);
           }
         });
-      } else {
-        res.redirect('/');
       }
-    } else {
-      res.redirect('/');
-    }
+    });
+    //   } else {
+    //     res.redirect('/');
+    //   }
+    // } else {
+    //   res.redirect('/');
+    // }
   }
 
   //[GET] /admin/usermanager/adduser

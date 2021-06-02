@@ -40,7 +40,8 @@
                 {{#each vouchers}}
                     
                         <tr>    
-                            <form action="/admin/vouchermanage/changestatus" method="POST">        
+                            <form action="/admin/vouchermanage/changestatus" method="POST"> 
+                                <input type="hidden" name="_id" value="{{this._id}}">       
                                 <input type="hidden" name="Code" value="{{this.Code}}">
                                 <input type="hidden" name="Status" value="{{this.Status}}">
                                 <td>{{this.VoucherID}}</td>
@@ -58,8 +59,10 @@
                                 </td> 
                                 </form>   
                             <form action="/vouchers/deletevoucher" method="POST">
-                                <input type="hidden" name="Code" value="{{this.Code}}">
+                                <input type="hidden" name="_id" value="{{this._id}}">
+                                <input type="hidden" name="Quantity" value="{{this.Quantity}}">
                                 <input type="hidden" name="Status" value="{{this.Status}}">
+                                <input type="hidden" name="ImageLink" value="{{this.ImageLink}}">
                                 <td>
                                     <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>  

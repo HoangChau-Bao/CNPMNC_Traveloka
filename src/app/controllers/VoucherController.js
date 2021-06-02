@@ -1,6 +1,8 @@
 const config = require('../../config/db/dbconfig');
 const sql = require('mssql');
 const tools = require('../../util/tools');
+const fs = require('fs');
+const path = require('path');
 const { renderSync } = require('node-sass');
 
 class VoucherController {
@@ -122,8 +124,53 @@ class VoucherController {
 
   //[POST] /voucher/deletevoucher
   deletevoucher(req, res) {
-    console.log('Delete voucher');
-    res.send(req.body);
+    //console.log(req.body);
+    let _id = req.body._id;
+    let str =
+      ' DELETE Voucher ' +
+      'FROM Voucher ' +
+      'INNER JOIN CTVoucher ON Voucher._id = CTVoucher.Voucher_id ' +
+      'WHERE Voucher._id = ' +
+      _id +
+      ' AND Voucher.Status = 0 AND CTVoucher.Status = 0 AND getdate() > CONVERT(DATETIME, Voucher.ExpDate)' +
+      'DELETE CTVoucher ' +
+      'FROM CTVoucher ' +
+      'LEFT JOIN Voucher ON Voucher._id = CTVoucher.Voucher_id ' +
+      'WHERE Voucher._id is null ' +
+      'DELETE FROM Voucher Where _id = ' +
+      _id +
+      ' AND Status = 0 AND getdate() > CONVERT(DATETIME, ExpDate)';
+
+    let status = req.body.Status;
+    let imagelink = req.body.ImageLink;
+    //console.log(__dirname + imagelink.split("/").join("\\"));
+    console.log(
+      path.resolve('src', 'public') + imagelink.split('/').join('\\'),
+    );
+    if (status == 'false') {
+      sql.connect(config, (err, result) => {
+        let request = new sql.Request();
+        if (err) {
+          console.log('Error while querying database :- ' + err);
+          throw err;
+        } else {
+          request.query(str, function (err, result) {
+            if (err) {
+              console.log('ERROR ' + err);
+              throw err;
+            } else {
+              console.log(path);
+              fs.unlinkSync(
+                path.resolve('src', 'public') + imagelink.split('/').join('\\'),
+              );
+              res.redirect('/admin/vouchermanage');
+            }
+          });
+        }
+      });
+    } else {
+      res.redirect('/admin/vouchermanage');
+    }
   }
 }
 

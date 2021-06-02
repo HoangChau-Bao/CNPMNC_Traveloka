@@ -160,7 +160,10 @@ class UserController {
   voucherwarehouse(req, res) {
     sql.connect(config, (err, result) => {
       let taikhoan = req.user.TaiKhoan;
-      let str = "SELECT * FROM CTVoucher Where TaiKhoan='" + taikhoan + "'";
+      let str =
+        "SELECT * FROM CTVoucher Where TaiKhoan='" +
+        taikhoan +
+        "' AND Status = 1";
       let request = new sql.Request();
       if (err) {
         console.log('Error while querying database :- ' + err);
