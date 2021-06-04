@@ -28,6 +28,182 @@ class ApiController {
     });
   }
 
+  //[GET] /api/GetUserVouchers
+  GetUserVoucherByID(req, res) {
+    res.send(req.query);
+  }
+
+  //[GET] /api/GetAllVoucherKhachSan
+  GetAllVoucherKhachSan(req, res) {
+    sql.connect(config, (err, result) => {
+      let str = "SELECT * FROM Voucher WHERE CatalogID = 'khachSan'";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            //   res.render('admin/vouchermanage', {
+            //     vouchers: result.recordset,
+            //   });
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
+  //[GET] /api/GetAllVoucherThueXe
+  GetAllVoucherThueXe(req, res) {
+    sql.connect(config, (err, result) => {
+      let str = "SELECT * FROM Voucher WHERE CatalogID = 'thueXe'";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
+  //[GET] /api/GetAllVoucherVeMayBay
+  GetAllVoucherVeMayBay(req, res) {
+    sql.connect(config, (err, result) => {
+      let str = "SELECT * FROM Voucher WHERE CatalogID = 'veMayBay'";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
+  //[GET] /api/GetAllVoucherCanHoBietThu
+  GetAllVoucherCanHoBietThu(req, res) {
+    sql.connect(config, (err, result) => {
+      let str = "SELECT * FROM Voucher WHERE CatalogID = 'canHoBietThu'";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
+  //[GET] /api/GetAllVoucherTourDuLich
+  GetAllVoucherTourDuLich(req, res) {
+    sql.connect(config, (err, result) => {
+      let str = "SELECT * FROM Voucher WHERE CatalogID = 'tourDuLich'";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
+  //[GET] /api/GetAllVoucherDuaDonSanBay
+  GetAllVoucherDuaDonSanBay(req, res) {
+    sql.connect(config, (err, result) => {
+      let str = "SELECT * FROM Voucher WHERE CatalogID = 'duaDonSanBay'";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
+  //[GET] /api/GetAllVoucher
+  GetAllVoucher(req, res) {
+    sql.connect(config, (err, result) => {
+      let str = 'SELECT * FROM Voucher';
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
+  //[GET] /api/GetAllUser
+  GetAllUser(req, res) {
+    sql.connect(config, (err, result) => {
+      let str = 'SELECT * FROM NguoiDung';
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
   // [POST] /api/CreateVoucherKhachSan  *đã test
   createVoucherKhachSan(req, res) {
     //res.send(req.body);
