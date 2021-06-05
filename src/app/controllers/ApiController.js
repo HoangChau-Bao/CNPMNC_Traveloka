@@ -186,7 +186,7 @@ class ApiController {
   //[GET] /api/GetAllUser
   GetAllUser(req, res) {
     sql.connect(config, (err, result) => {
-      let str = 'SELECT * FROM NguoiDung';
+      let str = 'SELECT * FROM NguoiDung WHERE ChucVu= 0';
       let request = new sql.Request();
       if (err) {
         res.status(400);
