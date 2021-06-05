@@ -7,6 +7,8 @@ router.get('/test', apiController.test);
 
 router.get('/GetUserVoucherByID', apiController.GetUserVoucherByID);
 
+router.get('/GetAllVoucherNguoiDung', apiController.GetAllVoucherNguoiDung);
+
 router.get('/GetAllVoucherKhachSan', apiController.GetAllVoucherKhachSan);
 
 router.get('/GetAllVoucherThueXe', apiController.GetAllVoucherThueXe);

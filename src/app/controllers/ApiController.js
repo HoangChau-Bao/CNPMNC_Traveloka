@@ -33,6 +33,30 @@ class ApiController {
     res.send(req.query);
   }
 
+  //[GET] /api/GetAllVoucherNguoiDung
+  GetAllVoucherNguoiDung(req, res) {
+    sql.connect(config, (err, result) => {
+      let str = 'SELECT * FROM CTVoucher';
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            //   res.render('admin/vouchermanage', {
+            //     vouchers: result.recordset,
+            //   });
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
   //[GET] /api/GetAllVoucherKhachSan
   GetAllVoucherKhachSan(req, res) {
     sql.connect(config, (err, result) => {
