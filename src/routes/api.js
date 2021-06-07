@@ -7,6 +7,8 @@ router.get('/test', apiController.test);
 
 router.get('/GetUserVoucherByID', apiController.GetUserVoucherByID);
 
+router.get('/GetVouchersByPartnerID', apiController.GetVouchersByPartnerID);
+
 router.get('/GetAllVoucherNguoiDung', apiController.GetAllVoucherNguoiDung);
 
 router.get('/GetAllVoucherKhachSan', apiController.GetAllVoucherKhachSan);
@@ -44,5 +46,6 @@ router.post(
   '/createVoucherDuaDonSanBay',
   apiController.createVoucherDuaDonSanBay,
 );
+router.post('/ChangeVocherStatusByID', apiController.changeVoucherStatusByID);
 
 module.exports = router;

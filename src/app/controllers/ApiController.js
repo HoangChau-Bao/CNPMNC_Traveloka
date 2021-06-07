@@ -33,6 +33,30 @@ class ApiController {
     res.send(req.query);
   }
 
+  //[GET] /api/GetVoucherByPartnerID
+  GetVouchersByPartnerID(req, res) {
+    //res.send(req.query.PartnerID);
+
+    sql.connect(config, (err, result) => {
+      let str =
+        "SELECT * FROM Voucher WHERE PartnerID = '" + req.query.PartnerID + "'";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
   //[GET] /api/GetAllVoucherNguoiDung
   GetAllVoucherNguoiDung(req, res) {
     sql.connect(config, (err, result) => {
@@ -724,6 +748,65 @@ class ApiController {
         }
       });
     }
+  }
+
+  changeVoucherStatusByID(req, res) {
+    sql.connect(config, (err, result) => {
+      let str =
+        "UPDATE Voucher SET Status = 'false' WHERE _id= '" + req.body._id + "'";
+      let str2 =
+        "UPDATE Voucher SET Status = 'true' WHERE _id= '" + req.body._id + "'";
+      let str3 =
+        "SELECT TOP 1 * FROM Voucher Where _id= '" + req.body._id + "'";
+      let request = new sql.Request();
+      if (err) {
+        console.log('Error while querying database :- ' + err);
+        throw err;
+      } else {
+        request.query(str3, (err, result1) => {
+          if (err) {
+            console.log('ERROR ' + err);
+            throw err;
+          } else {
+            console.log(result1.recordset);
+            if (result1.recordset.length != 0) {
+              if (result1.recordset[0].Status == true) {
+                request.query(str, function (err, result) {
+                  if (err) {
+                    console.log('ERROR ' + err);
+                    throw err;
+                  } else {
+                    res.status(200);
+                    res.send(
+                      'Trạng thái voucher ' +
+                        result1.recordset[0].Name +
+                        ' đã đổi thành False !',
+                    );
+                  }
+                });
+              } else {
+                request.query(str2, function (err, result) {
+                  if (err) {
+                    console.log('ERROR ' + err);
+                    throw err;
+                  } else {
+                    res.status(200);
+                    res.send(
+                      'Trạng thái voucher ' +
+                        result1.recordset[0].Name +
+                        ' đã đổi thành True !',
+                    );
+                  }
+                });
+              }
+            } else {
+              res.status(400);
+              res.send('Không tìm thấy Voucher với _id = ' + req.body._id);
+            }
+          }
+        });
+      }
+    });
   }
 }
 module.exports = new ApiController();
