@@ -4,6 +4,7 @@
   "description": "traveloka, vourcher, traveloka vourcher",
   "main": "src/index.js",
   "dependencies": {
+    "axios": "^0.21.1",
     "clipboard": "^2.0.8",
     "connect-flash": "^0.1.1",
     "cors": "^2.8.5",
@@ -18,6 +19,7 @@
     "node-schedule": "^2.0.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "request": "^2.88.2",
     "sessionstorage": "^0.1.0",
     "uuid": "^8.3.2"
   },
