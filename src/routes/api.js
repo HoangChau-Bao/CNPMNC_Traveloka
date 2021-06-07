@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 const apiController = require('../app/controllers/ApiController');
 
-//GET
+/////////////////////GET
 router.get('/test', apiController.test);
 
-router.get('/GetUserVoucherByID', apiController.GetUserVoucherByID);
+router.get('/GetVoucherByID', apiController.GetVoucherByID);
 
 router.get('/GetVouchersByPartnerID', apiController.GetVouchersByPartnerID);
+
+router.get('/GetVouchersByTaiKhoan', apiController.GetVouchersByTaiKhoan);
 
 router.get('/GetAllVoucherNguoiDung', apiController.GetAllVoucherNguoiDung);
 
@@ -33,7 +35,7 @@ router.get('/GetAllVoucher', apiController.GetAllVoucher);
 
 router.get('/GetAllUser', apiController.GetAllUser);
 
-//POST
+////////////////////POST
 router.post('/createVoucherKhachSan', apiController.createVoucherKhachSan);
 router.post('/createVoucherThueXe', apiController.createVoucherThueXe);
 router.post('/createVoucherVeMayBay', apiController.createVoucherVeMayBay);
@@ -47,5 +49,10 @@ router.post(
   apiController.createVoucherDuaDonSanBay,
 );
 router.post('/ChangeVoucherStatusByID', apiController.changeVoucherStatusByID);
+router.post('/UserUseVoucher', apiController.UserUseVoucher);
+router.post(
+  '/UpdateUserPointByTaiKhoan',
+  apiController.UpdateUserPointByTaiKhoan,
+);
 
 module.exports = router;

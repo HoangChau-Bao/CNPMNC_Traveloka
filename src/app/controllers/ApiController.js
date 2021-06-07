@@ -28,9 +28,31 @@ class ApiController {
     });
   }
 
-  //[GET] /api/GetUserVouchers
-  GetUserVoucherByID(req, res) {
-    res.send(req.query);
+  //[GET] /api/GetrVouchersByID
+  GetVoucherByID(req, res) {
+    sql.connect(config, (err, result) => {
+      let str = "SELECT * FROM Voucher WHERE _id = '" + req.query._id + "'";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            if (result.recordset.length != 0) {
+              res.status(200);
+              res.json(result);
+            } else {
+              res.status(400);
+              res.send('Không có Voucher với _id này !');
+            }
+          }
+        });
+      }
+    });
   }
 
   //[GET] /api/GetVoucherByPartnerID
@@ -50,6 +72,7 @@ class ApiController {
             res.status(400);
             res.send('Error :- ' + err);
           } else {
+            res.status(200);
             res.json(result);
           }
         });
@@ -74,6 +97,27 @@ class ApiController {
             //   res.render('admin/vouchermanage', {
             //     vouchers: result.recordset,
             //   });
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
+  GetVouchersByTaiKhoan(req, res) {
+    sql.connect(config, (err, result) => {
+      let str =
+        "SELECT * FROM CTVoucher WHERE TaiKhoan = '" + req.query.TaiKhoan + "'";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
             res.json(result);
           }
         });
@@ -802,6 +846,101 @@ class ApiController {
             } else {
               res.status(400);
               res.send('Không tìm thấy Voucher với _id = ' + req.body._id);
+            }
+          }
+        });
+      }
+    });
+  }
+
+  UserUseVoucher(req, res) {
+    sql.connect(config, (err, result) => {
+      let str =
+        "SELECT TOP 1 * FROM CTVoucher WHERE TaiKhoan = '" +
+        req.body.TaiKhoan +
+        "' AND Code = '" +
+        req.body.Code +
+        "'";
+      let str2 =
+        "UPDATE TOP (1) CTVoucher set Status = 0 where Taikhoan = 'a' AND Code = 'VJBAYBAY' And Status = 1";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            if (result.recordset.length != 0) {
+              request.query(str2, function (err, result2) {
+                if (err) {
+                  res.status(400);
+                  res.send('ERR: ' + err);
+                } else {
+                  res.status(200);
+                  res.send('Đã dùng 1 Voucher !');
+                }
+              });
+            } else {
+              res.status(400);
+              res.send('Người dùng không sở hữu Voucher này !');
+            }
+          }
+        });
+      }
+    });
+  }
+
+  UpdateUserPointByTaiKhoan(req, res) {
+    sql.connect(config, (err, result) => {
+      let DiemHienTai, DiemTong;
+      let str =
+        "SELECT TOP 1 * FROM NguoiDung WHERE TaiKHoan = '" +
+        req.body.TaiKhoan +
+        "'";
+      let request = new sql.Request();
+      if (err) {
+        console.log('Error while querying database :- ' + err);
+        throw err;
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            console.log('ERROR ' + err);
+            throw err;
+          } else {
+            if (result.recordset.length != 0) {
+              DiemHienTai = parseInt(result.recordset[0].DiemHienTai);
+              DiemTong = parseInt(result.recordset[0].DiemTong);
+              console.log(DiemHienTai + '  ' + DiemTong);
+              DiemHienTai += 1000;
+              DiemTong += 1000;
+              console.log(DiemHienTai + '  ' + DiemTong);
+              let str2 =
+                'UPDATE NguoiDung SET DiemTong = ' +
+                DiemTong +
+                ', DiemHienTai = ' +
+                DiemHienTai +
+                " WHERE TaiKhoan = '" +
+                req.body.TaiKhoan +
+                "'";
+              request.query(str2, (err, result2) => {
+                if (err) {
+                  res.status(400);
+                  res.send('ERR: ' + err);
+                } else {
+                  res.status(200);
+                  res.send(
+                    'Cập nhật điểm thành công cho tài khoản ' +
+                      req.body.TaiKhoan +
+                      '!',
+                  );
+                }
+              });
+            } else {
+              res.status(400);
+              res.send('Tài khoản không tồn tại !');
             }
           }
         });
