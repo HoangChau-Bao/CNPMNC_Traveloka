@@ -41,7 +41,9 @@ class UserController {
             console.log('ERROR ' + err);
             throw err;
           } else {
-            res.render('user/profile', { user: result.recordset });
+            if (req.user.PartnerID == '')
+              res.render('user/profile', { user: result.recordset });
+            else res.render('user/profilepartner', { user: result.recordset });
             //res.json(result);
           }
         });

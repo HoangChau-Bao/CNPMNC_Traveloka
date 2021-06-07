@@ -29,7 +29,11 @@ class AdminController {
             });
           }
         });
+      } else {
+        res.redirect('/');
       }
+    } else {
+      res.redirect('/');
     }
   }
 
@@ -117,13 +121,13 @@ class AdminController {
       let sdt = req.body.SoDienThoai;
       let diachi = req.body.DiaChi;
       let chucvu = req.body.ChucVu;
-
+      let partnerid = req.body.PartnerID;
       let str1 = "SELECT * FROM NguoiDung Where TaiKhoan='" + taikhoan + "'"; //query kiểm tra tài khoản có trùng không;
 
       let str2 = "SELECT * FROM NguoiDung Where SoDienThoai='" + sdt + "'"; //query kiểm tra số điện thoại đã tồn tại chưa;
 
       let str3 =
-        'INSERT INTO NguoiDung (TaiKhoan, MatKhau, HoTen, SoDienThoai, DiaChi, ChucVu) ' +
+        'INSERT INTO NguoiDung (TaiKhoan, MatKhau, HoTen, SoDienThoai, DiaChi, ChucVu, PartnerID) ' +
         "VALUES ('" +
         taikhoan +
         "', '" +
@@ -136,6 +140,8 @@ class AdminController {
         diachi +
         "', '" +
         chucvu +
+        "', '" +
+        partnerid +
         "');";
 
       let request = new sql.Request();

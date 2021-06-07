@@ -1,0 +1,94 @@
+
+
+<div class="containeradd">
+
+    <form class="form-Them-Voucher" method="POST" action="/vouchers/store2" enctype="multipart/form-data" >
+
+        <h1 style="color: blue; font-weight: bold; font-size: 50px;">Thêm Voucher</h1>
+
+        <div class="add" style="text-align: left;">
+        
+        {{#if messages}}
+            {{messages}}
+        {{/if}}
+        
+        <div class="form-text">
+            <label>Loại voucher:</label>
+            <select name="CatalogID" id="CatalogID" placeholder="Loại dịch vụ"  required="">
+                <option value="thueXe">Thuê Xe</option>
+                <option value="veMayBay">Vé Máy bay</option>
+                <option value="khachSan">Khách sạn</option>
+                <option value="canHoBietThu">Căn hộ/ Biệt Thự</option>
+                <option value="tourDuLich">Tour Du Lịch</option>
+                <option value="duaDonSanBay">Đưa đón sân bay</option>
+            </select>
+        </div>
+
+        
+
+        <div class="form-text">
+            <label>Tên voucher:</label>
+            <input type="text" name="Name" placeholder="Tên Voucher"  required=""> 
+        </div>
+        
+        <div class="form-date">
+            <label>Thời hạn sử dụng từ ngày: </label>
+            <input type="date" name="CreateDate" id="CreateDate" required="">
+            <label>Đến ngày:</label>
+            <input type="date" name="ExpDate" id="ExpDate" required="">
+            
+        </div>
+
+        <div class="form-text">
+            <label>Giá đổi:</label>
+            <input type="number" name="PointCost" min="0" max="1000000" step="100"  placeholder="Giá mua(Point) nếu là miễn phí thì nhập (0)" required="">
+        </div>
+
+        <div class="form-text">
+            <label>Tỉ lệ giảm giá:</label>
+            <input type="number" name="Discount" placeholder="Tỷ lệ giảm giá tính bằng %" required="">
+        </div>
+
+        <div class="form-text">
+            <label>Số tiền giảm:</label>
+            <input type="number" name="MoneyDiscount" placeholder="Số tiền giảm giá VNĐ" min="0" max="90000000" step="5000" required="">
+        </div>
+
+        <div class="form-text">
+            <label>Số lượng:</label>
+            <input type="number" name="Quantity" placeholder="Số lượng" required="">
+        </div>
+        
+        <div class="form-file">
+            <label>Link ảnh</label>
+            <input type="file" name="ImageLink" accept="image/*" required="">
+        </div>
+        
+        <div class="form-text">
+            <label>Tiêu đề:</label>
+            <textarea id="ContentHeader" name="ContentHeader" placeholder="Tiêu đề" rows="3" cols="60" style="resize: none;" required=""></textarea> 
+        </div>
+
+        <div class="form-text">
+            <label>Nội dung:</label>
+            <textarea id="Contents" name="Contents" placeholder="Nội dung" rows="10" cols="60" style="resize: none;" required=""></textarea> 
+        </div>
+
+        <div class="form-text">
+            <label>Quảng cáo trong thẻ:</label>
+            <textarea id="PreContent" name="PreContent" placeholder="Quảng cáo trong thẻ" rows="3" cols="60" style="resize: none;" required=""></textarea> 
+        </div>
+
+
+        <div class="form-text">
+            <label>Mô tả giá trị ưu đãi:</label>
+            <textarea id="VoucherNote" name="VoucherNote" placeholder="Mô tả giá trị ưu đãi" rows="2" cols="60" style="resize: none;" required=""></textarea> 
+        </div>
+        
+        
+        <div >
+        <button style="width: 200px;">Submit</button>
+        <input class="buttoncancel" name="buttoncancel" id="buttoncancel" type="button" onclick="window.location.replace('/')" value="Cancel" />
+        </div>
+    </form>  
+ </div>   
