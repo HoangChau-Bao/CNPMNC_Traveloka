@@ -18,6 +18,7 @@ const fileUpload = require('express-fileupload');
 app.use(
   session({
     secret: 'mysecret',
+    maxAge: 20 * 60 * 60 * 1000, //20h
   }),
 );
 
