@@ -60,7 +60,7 @@ class VoucherController {
     } else {
       let sampleFile = req.files.ImageLink;
       let uploadPath =
-        'src/public/img/' + req.body.CreateDate + sampleFile.name;
+        '/src/public/img/' + req.body.CreateDate + sampleFile.name;
       sampleFile.mv(uploadPath, (err) => {
         if (err) return res.send(err);
       });
