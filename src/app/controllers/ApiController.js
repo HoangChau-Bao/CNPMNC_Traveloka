@@ -914,8 +914,8 @@ class ApiController {
               DiemHienTai = parseInt(result.recordset[0].DiemHienTai);
               DiemTong = parseInt(result.recordset[0].DiemTong);
               console.log(DiemHienTai + '  ' + DiemTong);
-              DiemHienTai += 1000;
-              DiemTong += 1000;
+              DiemHienTai += parseInt(req.body.Diem);
+              DiemTong += parseInt(req.body.Diem);
               console.log(DiemHienTai + '  ' + DiemTong);
               let str2 =
                 'UPDATE NguoiDung SET DiemTong = ' +
