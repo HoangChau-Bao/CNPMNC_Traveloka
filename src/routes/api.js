@@ -46,6 +46,6 @@ router.post(
   '/createVoucherDuaDonSanBay',
   apiController.createVoucherDuaDonSanBay,
 );
-router.post('/ChangeVocherStatusByID', apiController.changeVoucherStatusByID);
+router.post('/ChangeVoucherStatusByID', apiController.changeVoucherStatusByID);
 
 module.exports = router;
