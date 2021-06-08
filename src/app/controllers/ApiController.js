@@ -28,6 +28,22 @@ class ApiController {
     });
   }
 
+  testPostImgs3(req, res) {
+    //res.send(req.body);
+    let sampleFile = req.files.ImageLink;
+    //  let uploadPath =
+    //    'src/public/img/' + req.body.CreateDate + sampleFile.name;
+    //  sampleFile.mv(uploadPath, (err) => {
+    //   if (err) {
+    //      res.status(400);
+    //      res.send(err);
+    //    }
+    //  });
+
+    let file = req.files.ImageLink;
+    console.log(file);
+  }
+
   //[GET] /api/GetrVouchersByID
   GetVoucherByID(req, res) {
     sql.connect(config, (err, result) => {

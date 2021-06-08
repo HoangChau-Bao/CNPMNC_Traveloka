@@ -2,9 +2,12 @@ const express = require('express');
 const router = express.Router();
 const apiController = require('../app/controllers/ApiController');
 
-/////////////////////GET
+//////////////////TEST
 router.get('/test', apiController.test);
 
+router.post('/testPostImgS3', apiController.testPostImgs3);
+
+/////////////////////GET
 router.get('/GetVoucherByID', apiController.GetVoucherByID);
 
 router.get('/GetVouchersByPartnerID', apiController.GetVouchersByPartnerID);
@@ -36,6 +39,7 @@ router.get('/GetAllVoucher', apiController.GetAllVoucher);
 router.get('/GetAllUser', apiController.GetAllUser);
 
 ////////////////////POST
+
 router.post('/createVoucherKhachSan', apiController.createVoucherKhachSan);
 router.post('/createVoucherThueXe', apiController.createVoucherThueXe);
 router.post('/createVoucherVeMayBay', apiController.createVoucherVeMayBay);
