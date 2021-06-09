@@ -91,6 +91,28 @@ class ApiController {
     });
   }
 
+  //[GET] /api/GetVoucherByCode
+  GetVoucherByCode(req, res) {
+    sql.connect(config, (err, result) => {
+      let str = "SELECT * FROM Voucher WHERE Code = '" + req.query.Code + "'";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            res.status(200);
+            res.json(result);
+          }
+        });
+      }
+    });
+  }
+
   //[GET] /api/GetVoucherByPartnerID
   GetVouchersByPartnerID(req, res) {
     //res.send(req.query.PartnerID);

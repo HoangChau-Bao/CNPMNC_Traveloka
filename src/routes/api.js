@@ -10,6 +10,8 @@ router.post('/testPostImgS3', apiController.testPostImgs3);
 /////////////////////GET
 router.get('/GetVoucherByID', apiController.GetVoucherByID);
 
+router.get('/GetVoucherByCode', apiController.GetVoucherByCode);
+
 router.get('/GetVouchersByPartnerID', apiController.GetVouchersByPartnerID);
 
 router.get('/GetVouchersByTaiKhoan', apiController.GetVouchersByTaiKhoan);
