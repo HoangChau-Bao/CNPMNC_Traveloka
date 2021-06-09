@@ -69,6 +69,7 @@ class VoucherController {
         messages: 'Ngày hết hạn phải lớn hơn ngày bắt đầu !',
       });
     } else {
+      saveimg(true, sqlCon);
       function sqlCon() {
         sql.connect(config, (err, result) => {
           let request = new sql.Request();
@@ -123,7 +124,7 @@ class VoucherController {
               req.body.MoneyDiscount +
               "');";
             request.query(str, (err, result) => {
-              if (err) throw err;
+              if (err) res.status(400).send(err);
               else res.redirect('/admin/vouchermanage');
             });
           }
@@ -132,20 +133,19 @@ class VoucherController {
 
       function saveimg(x, callback) {
         const s3 = new AWS.S3({
-          accessKeyId: process.env.AWS_ACCESS_KEY,
-          secretAccessKey: process.env.AWS_SECRET_KEY,
+          accessKeyId: 'AKIAZFXHRHWTCDY6IJV3',
+          secretAccessKey: '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',
         });
         console.log(req.files.ImageLink);
         let key = Date.now() + req.files.ImageLink.name;
         let params = {
-          Bucket: process.env.AWS_BUCKET_NAME,
+          Bucket: 'cnpm-bucket-voucher-team',
           Key: key,
           Body: req.files.ImageLink.data,
         };
         s3.upload(params, (err, result) => {
           if (err) {
             console.log(err);
-            throw err;
             res.status(500).send(err);
           } else {
             console.log(result.Location);
@@ -156,8 +156,6 @@ class VoucherController {
           }
         });
       }
-
-      saveimg(true, sqlCon);
     }
   }
 
