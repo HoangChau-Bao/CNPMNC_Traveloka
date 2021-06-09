@@ -7,6 +7,7 @@ const { renderSync } = require('node-sass');
 const AWS = require('aws-sdk');
 
 const multer = require('multer');
+const sqlschedule = require('../../util/sqlschedule');
 const storage = multer.memoryStorage({
   destination: function (req, file, callback) {
     callback('null', '');
@@ -58,6 +59,7 @@ class VoucherController {
   // [POST] /vouchers/store  *lưu voucher đã test case
   store(req, res, next) {
     //res.send(req.body);
+    let imgLink;
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
     let EndDate = Date.parse(req.body.ExpDate);
@@ -67,31 +69,6 @@ class VoucherController {
         messages: 'Ngày hết hạn phải lớn hơn ngày bắt đầu !',
       });
     } else {
-      const s3 = new AWS.S3({
-        accessKeyId: process.env.AWS_ACCESS_KEY,
-        secretAccessKey: process.env.AWS_SECRET_KEY,
-      });
-      console.log(req.files.ImageLink);
-      let key = Date.now() + req.files.ImageLink.name;
-      let params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: key,
-        Body: req.files.ImageLink.data,
-      };
-      let imgLink;
-      s3.upload(params, (err, result) => {
-        if (err) {
-          console.log(err);
-          throw err;
-          res.status(500).send(err);
-        } else {
-          console.log(result.Location);
-          imgLink = result.Location;
-          console.log('imgLink: ' + imgLink);
-          //res.status(200).send(result);
-        }
-      });
-
       function sqlCon() {
         sql.connect(config, (err, result) => {
           let request = new sql.Request();
@@ -152,7 +129,35 @@ class VoucherController {
           }
         });
       }
-      setTimeout(sqlCon, 4000);
+
+      function saveimg(x, callback) {
+        const s3 = new AWS.S3({
+          accessKeyId: process.env.AWS_ACCESS_KEY,
+          secretAccessKey: process.env.AWS_SECRET_KEY,
+        });
+        console.log(req.files.ImageLink);
+        let key = Date.now() + req.files.ImageLink.name;
+        let params = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: key,
+          Body: req.files.ImageLink.data,
+        };
+        s3.upload(params, (err, result) => {
+          if (err) {
+            console.log(err);
+            throw err;
+            res.status(500).send(err);
+          } else {
+            console.log(result.Location);
+            imgLink = result.Location;
+            console.log('imgLink: ' + imgLink);
+            callback();
+            //res.status(200).send(result);
+          }
+        });
+      }
+
+      saveimg(true, sqlCon);
     }
   }
 
