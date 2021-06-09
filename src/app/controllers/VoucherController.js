@@ -58,7 +58,6 @@ class VoucherController {
 
   // [POST] /vouchers/store  *lưu voucher đã test case
   store(req, res, next) {
-    //res.send(req.body);
     let imgLink;
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
@@ -161,7 +160,7 @@ class VoucherController {
 
   //[POST] /voucher/store2 chưa test case
   store2(req, res, next) {
-    //res.send(req.body);
+    let imgLink;
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
     let EndDate = Date.parse(req.body.ExpDate);
@@ -171,31 +170,7 @@ class VoucherController {
         messages: 'Ngày hết hạn phải lớn hơn ngày bắt đầu !',
       });
     } else {
-      const s3 = new AWS.S3({
-        accessKeyId: process.env.AWS_ACCESS_KEY,
-        secretAccessKey: process.env.AWS_SECRET_KEY,
-      });
-      console.log(req.files.ImageLink);
-      let key = Date.now() + req.files.ImageLink.name;
-      let params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: key,
-        Body: req.files.ImageLink.data,
-      };
-      let imgLink;
-      s3.upload(params, (err, result) => {
-        if (err) {
-          console.log(err);
-          throw err;
-          res.status(500).send(err);
-        } else {
-          console.log(result.Location);
-          imgLink = result.Location;
-          console.log('imgLink: ' + imgLink);
-          //res.status(200).send(result);
-        }
-      });
-
+      saveimg(true, sqlCon);
       function sqlCon() {
         sql.connect(config, (err, result) => {
           let request = new sql.Request();
@@ -214,7 +189,7 @@ class VoucherController {
             let str =
               'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
               "VALUES (N'" +
-              req.user.PartnerID +
+              req.body.PartnerID +
               req.body.Name +
               "', N'" +
               req.body.CatalogID +
@@ -225,7 +200,7 @@ class VoucherController {
               ', ' +
               req.body.Discount +
               ", '" +
-              req.user.PartnerID +
+              req.body.PartnerID +
               "', " +
               req.body.Quantity +
               ", N'" +
@@ -250,13 +225,38 @@ class VoucherController {
               req.body.MoneyDiscount +
               "');";
             request.query(str, (err, result) => {
-              if (err) throw err;
+              if (err) res.status(400).send(err);
               else res.redirect('/user/profile');
             });
           }
         });
       }
-      setTimeout(sqlCon, 4000);
+
+      function saveimg(x, callback) {
+        const s3 = new AWS.S3({
+          accessKeyId: 'AKIAZFXHRHWTCDY6IJV3',
+          secretAccessKey: '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',
+        });
+        console.log(req.files.ImageLink);
+        let key = Date.now() + req.files.ImageLink.name;
+        let params = {
+          Bucket: 'cnpm-bucket-voucher-team',
+          Key: key,
+          Body: req.files.ImageLink.data,
+        };
+        s3.upload(params, (err, result) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send(err);
+          } else {
+            console.log(result.Location);
+            imgLink = result.Location;
+            console.log('imgLink: ' + imgLink);
+            callback();
+            //res.status(200).send(result);
+          }
+        });
+      }
     }
   }
 

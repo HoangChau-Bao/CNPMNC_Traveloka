@@ -334,499 +334,589 @@ class ApiController {
 
   // [POST] /api/CreateVoucherKhachSan  *đã test
   createVoucherKhachSan(req, res) {
-    //res.send(req.body);
+    let imgLink;
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
     let EndDate = Date.parse(req.body.ExpDate);
     console.log(EndDate);
     if (StartDate > EndDate) {
-      res.status(400);
-      res.send('Ngày hết hạn phải lớn hơn ngày bắt đầu');
+      res.status(200).send(' Ngày bắt đầu phải bé hơn ngày kết thúc !');
     } else {
-      let sampleFile = req.files.ImageLink;
-      let uploadPath =
-        '/src/public/img/' + req.body.CreateDate + sampleFile.name;
-      sampleFile.mv(uploadPath, (err) => {
-        if (err) {
-          res.status(400);
-          res.send(err);
-        }
-      });
-
-      sql.connect(config, (err, result) => {
-        let request = new sql.Request();
-        if (err) {
-          res.status(400);
-          res.send('Error while querying database :- ' + err);
-        } else {
+      saveimg(true, sqlCon);
+      function sqlCon() {
+        sql.connect(config, (err, result) => {
           let request = new sql.Request();
+          if (err) {
+            console.log('Error while querying database :- ' + err);
+            throw err;
+          } else {
+            let request = new sql.Request();
 
-          let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            //let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            console.log('imgLink 2: ' + imgLink);
+            let slug = tools.toslug(req.body.Name);
+            let code = tools.randomcode();
+            let CreateDate = req.body.CreateDate;
+            let ExpDate = req.body.ExpDate;
+            let str =
+              'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
+              "VALUES (N'" +
+              req.body.PartnerID +
+              req.body.Name +
+              "', N'khachSan', N'" +
+              req.body.Name +
+              "', " +
+              req.body.PointCost +
+              ', ' +
+              req.body.Discount +
+              ", '" +
+              req.body.PartnerID +
+              "', " +
+              req.body.Quantity +
+              ", N'" +
+              code +
+              "', '" +
+              imgLink +
+              "', N'" +
+              req.body.ContentHeader +
+              "', N'" +
+              req.body.PreContent +
+              "', N'" +
+              req.body.Contents +
+              "', N'" +
+              req.body.VoucherNote +
+              "', '" +
+              slug +
+              "', '" +
+              CreateDate +
+              "', '" +
+              ExpDate +
+              "', '" +
+              req.body.MoneyDiscount +
+              "');";
+            request.query(str, (err, result) => {
+              if (err) res.status(400).send(err);
+              else res.status(200).send('Thêm mới thành công !');
+            });
+          }
+        });
+      }
 
-          let slug = tools.toslug(req.body.Name);
-          let code = tools.randomcode();
-          let CreateDate = req.body.CreateDate;
-          let ExpDate = req.body.ExpDate;
-          let str =
-            'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
-            "VALUES (N'" +
-            req.body.PartnerID +
-            req.body.Name +
-            "', N'khachSan', N'" +
-            req.body.Name +
-            "', " +
-            req.body.PointCost +
-            ', ' +
-            req.body.Discount +
-            ", '" +
-            req.body.PartnerID +
-            "', " +
-            req.body.Quantity +
-            ", N'" +
-            code +
-            "', '" +
-            ImagePath +
-            "', N'" +
-            req.body.ContentHeader +
-            "', N'" +
-            req.body.PreContent +
-            "', N'" +
-            req.body.Contents +
-            "', N'" +
-            req.body.VoucherNote +
-            "', '" +
-            slug +
-            "', '" +
-            CreateDate +
-            "', '" +
-            ExpDate +
-            "', '" +
-            req.body.MoneyDiscount +
-            "');";
-          request.query(str, (err, result) => {
-            if (err) {
-              res.status(400);
-              res.send(err);
-            } else res.status(201);
-            res.send('Tạo thành công !');
-          });
-        }
-      });
+      function saveimg(x, callback) {
+        const s3 = new AWS.S3({
+          accessKeyId: 'AKIAZFXHRHWTCDY6IJV3',
+          secretAccessKey: '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',
+        });
+        console.log(req.files.ImageLink);
+        let key = Date.now() + req.files.ImageLink.name;
+        let params = {
+          Bucket: 'cnpm-bucket-voucher-team',
+          Key: key,
+          Body: req.files.ImageLink.data,
+        };
+        s3.upload(params, (err, result) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send(err);
+          } else {
+            console.log(result.Location);
+            imgLink = result.Location;
+            console.log('imgLink: ' + imgLink);
+            callback();
+            //res.status(200).send(result);
+          }
+        });
+      }
     }
   }
 
   // [POST] /api/CreateVoucherThueXe  *đã test
   createVoucherThueXe(req, res) {
-    //res.send(req.body);
+    let imgLink;
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
     let EndDate = Date.parse(req.body.ExpDate);
     console.log(EndDate);
     if (StartDate > EndDate) {
-      res.status(400);
-      res.send('Ngày hết hạn phải lớn hơn ngày bắt đầu');
+      res.status(200).send(' Ngày bắt đầu phải bé hơn ngày kết thúc !');
     } else {
-      let sampleFile = req.files.ImageLink;
-      let uploadPath =
-        'src/public/img/' + req.body.CreateDate + sampleFile.name;
-      sampleFile.mv(uploadPath, (err) => {
-        if (err) {
-          res.status(400);
-          res.send(err);
-        }
-      });
-
-      sql.connect(config, (err, result) => {
-        let request = new sql.Request();
-        if (err) {
-          res.status(400);
-          res.send('Error while querying database :- ' + err);
-        } else {
+      saveimg(true, sqlCon);
+      function sqlCon() {
+        sql.connect(config, (err, result) => {
           let request = new sql.Request();
+          if (err) {
+            console.log('Error while querying database :- ' + err);
+            throw err;
+          } else {
+            let request = new sql.Request();
 
-          let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            //let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            console.log('imgLink 2: ' + imgLink);
+            let slug = tools.toslug(req.body.Name);
+            let code = tools.randomcode();
+            let CreateDate = req.body.CreateDate;
+            let ExpDate = req.body.ExpDate;
+            let str =
+              'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
+              "VALUES (N'" +
+              req.body.PartnerID +
+              req.body.Name +
+              "', N'thueXe', N'" +
+              req.body.Name +
+              "', " +
+              req.body.PointCost +
+              ', ' +
+              req.body.Discount +
+              ", '" +
+              req.body.PartnerID +
+              "', " +
+              req.body.Quantity +
+              ", N'" +
+              code +
+              "', '" +
+              imgLink +
+              "', N'" +
+              req.body.ContentHeader +
+              "', N'" +
+              req.body.PreContent +
+              "', N'" +
+              req.body.Contents +
+              "', N'" +
+              req.body.VoucherNote +
+              "', '" +
+              slug +
+              "', '" +
+              CreateDate +
+              "', '" +
+              ExpDate +
+              "', '" +
+              req.body.MoneyDiscount +
+              "');";
+            request.query(str, (err, result) => {
+              if (err) res.status(400).send(err);
+              else res.status(200).send('Thêm mới thành công !');
+            });
+          }
+        });
+      }
 
-          let slug = tools.toslug(req.body.Name);
-          let code = tools.randomcode();
-          let CreateDate = req.body.CreateDate;
-          let ExpDate = req.body.ExpDate;
-          let str =
-            'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
-            "VALUES (N'" +
-            req.body.PartnerID +
-            req.body.Name +
-            "', N'thueXe', N'" +
-            req.body.Name +
-            "', " +
-            req.body.PointCost +
-            ', ' +
-            req.body.Discount +
-            ", '" +
-            req.body.PartnerID +
-            "', " +
-            req.body.Quantity +
-            ", N'" +
-            code +
-            "', '" +
-            ImagePath +
-            "', N'" +
-            req.body.ContentHeader +
-            "', N'" +
-            req.body.PreContent +
-            "', N'" +
-            req.body.Contents +
-            "', N'" +
-            req.body.VoucherNote +
-            "', '" +
-            slug +
-            "', '" +
-            CreateDate +
-            "', '" +
-            ExpDate +
-            "', '" +
-            req.body.MoneyDiscount +
-            "');";
-          request.query(str, (err, result) => {
-            if (err) {
-              res.status(400);
-              res.send(err);
-            } else res.status(201);
-            res.send('Tạo thành công !');
-          });
-        }
-      });
+      function saveimg(x, callback) {
+        const s3 = new AWS.S3({
+          accessKeyId: 'AKIAZFXHRHWTCDY6IJV3',
+          secretAccessKey: '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',
+        });
+        console.log(req.files.ImageLink);
+        let key = Date.now() + req.files.ImageLink.name;
+        let params = {
+          Bucket: 'cnpm-bucket-voucher-team',
+          Key: key,
+          Body: req.files.ImageLink.data,
+        };
+        s3.upload(params, (err, result) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send(err);
+          } else {
+            console.log(result.Location);
+            imgLink = result.Location;
+            console.log('imgLink: ' + imgLink);
+            callback();
+            //res.status(200).send(result);
+          }
+        });
+      }
     }
   }
 
   // [POST] /api/CreateVoucherVeMayBay  *đã test
   createVoucherVeMayBay(req, res) {
-    //res.send(req.body);
+    let imgLink;
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
     let EndDate = Date.parse(req.body.ExpDate);
     console.log(EndDate);
     if (StartDate > EndDate) {
-      res.status(400);
-      res.send('Ngày hết hạn phải lớn hơn ngày bắt đầu');
+      res.status(200).send(' Ngày bắt đầu phải bé hơn ngày kết thúc !');
     } else {
-      let sampleFile = req.files.ImageLink;
-      let uploadPath =
-        'src/public/img/' + req.body.CreateDate + sampleFile.name;
-      sampleFile.mv(uploadPath, (err) => {
-        if (err) {
-          res.status(400);
-          res.send(err);
-        }
-      });
-
-      sql.connect(config, (err, result) => {
-        let request = new sql.Request();
-        if (err) {
-          res.status(400);
-          res.send('Error while querying database :- ' + err);
-        } else {
+      saveimg(true, sqlCon);
+      function sqlCon() {
+        sql.connect(config, (err, result) => {
           let request = new sql.Request();
+          if (err) {
+            console.log('Error while querying database :- ' + err);
+            throw err;
+          } else {
+            let request = new sql.Request();
 
-          let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            //let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            console.log('imgLink 2: ' + imgLink);
+            let slug = tools.toslug(req.body.Name);
+            let code = tools.randomcode();
+            let CreateDate = req.body.CreateDate;
+            let ExpDate = req.body.ExpDate;
+            let str =
+              'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
+              "VALUES (N'" +
+              req.body.PartnerID +
+              req.body.Name +
+              "', N'veMayBay', N'" +
+              req.body.Name +
+              "', " +
+              req.body.PointCost +
+              ', ' +
+              req.body.Discount +
+              ", '" +
+              req.body.PartnerID +
+              "', " +
+              req.body.Quantity +
+              ", N'" +
+              code +
+              "', '" +
+              imgLink +
+              "', N'" +
+              req.body.ContentHeader +
+              "', N'" +
+              req.body.PreContent +
+              "', N'" +
+              req.body.Contents +
+              "', N'" +
+              req.body.VoucherNote +
+              "', '" +
+              slug +
+              "', '" +
+              CreateDate +
+              "', '" +
+              ExpDate +
+              "', '" +
+              req.body.MoneyDiscount +
+              "');";
+            request.query(str, (err, result) => {
+              if (err) res.status(400).send(err);
+              else res.status(200).send('Thêm mới thành công !');
+            });
+          }
+        });
+      }
 
-          let slug = tools.toslug(req.body.Name);
-          let code = tools.randomcode();
-          let CreateDate = req.body.CreateDate;
-          let ExpDate = req.body.ExpDate;
-          let str =
-            'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
-            "VALUES (N'" +
-            req.body.PartnerID +
-            req.body.Name +
-            "', N'veMayBay', N'" +
-            req.body.Name +
-            "', " +
-            req.body.PointCost +
-            ', ' +
-            req.body.Discount +
-            ", '" +
-            req.body.PartnerID +
-            "', " +
-            req.body.Quantity +
-            ", N'" +
-            code +
-            "', '" +
-            ImagePath +
-            "', N'" +
-            req.body.ContentHeader +
-            "', N'" +
-            req.body.PreContent +
-            "', N'" +
-            req.body.Contents +
-            "', N'" +
-            req.body.VoucherNote +
-            "', '" +
-            slug +
-            "', '" +
-            CreateDate +
-            "', '" +
-            ExpDate +
-            "', '" +
-            req.body.MoneyDiscount +
-            "');";
-          request.query(str, (err, result) => {
-            if (err) {
-              res.status(400);
-              res.send(err);
-            } else res.status(201);
-            res.send('Tạo thành công !');
-          });
-        }
-      });
+      function saveimg(x, callback) {
+        const s3 = new AWS.S3({
+          accessKeyId: 'AKIAZFXHRHWTCDY6IJV3',
+          secretAccessKey: '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',
+        });
+        console.log(req.files.ImageLink);
+        let key = Date.now() + req.files.ImageLink.name;
+        let params = {
+          Bucket: 'cnpm-bucket-voucher-team',
+          Key: key,
+          Body: req.files.ImageLink.data,
+        };
+        s3.upload(params, (err, result) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send(err);
+          } else {
+            console.log(result.Location);
+            imgLink = result.Location;
+            console.log('imgLink: ' + imgLink);
+            callback();
+            //res.status(200).send(result);
+          }
+        });
+      }
     }
   }
 
   // [POST] /api/CreateVoucherCanHoBietThu  *đã test
   createVoucherCanHoBietThu(req, res) {
-    //res.send(req.body);
+    let imgLink;
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
     let EndDate = Date.parse(req.body.ExpDate);
     console.log(EndDate);
     if (StartDate > EndDate) {
-      res.status(400);
-      res.send('Ngày hết hạn phải lớn hơn ngày bắt đầu');
+      res.status(200).send(' Ngày bắt đầu phải bé hơn ngày kết thúc !');
     } else {
-      let sampleFile = req.files.ImageLink;
-      let uploadPath =
-        'src/public/img/' + req.body.CreateDate + sampleFile.name;
-      sampleFile.mv(uploadPath, (err) => {
-        if (err) {
-          res.status(400);
-          res.send(err);
-        }
-      });
-
-      sql.connect(config, (err, result) => {
-        let request = new sql.Request();
-        if (err) {
-          res.status(400);
-          res.send('Error while querying database :- ' + err);
-        } else {
+      saveimg(true, sqlCon);
+      function sqlCon() {
+        sql.connect(config, (err, result) => {
           let request = new sql.Request();
+          if (err) {
+            console.log('Error while querying database :- ' + err);
+            throw err;
+          } else {
+            let request = new sql.Request();
 
-          let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            //let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            console.log('imgLink 2: ' + imgLink);
+            let slug = tools.toslug(req.body.Name);
+            let code = tools.randomcode();
+            let CreateDate = req.body.CreateDate;
+            let ExpDate = req.body.ExpDate;
+            let str =
+              'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
+              "VALUES (N'" +
+              req.body.PartnerID +
+              req.body.Name +
+              "', N'canHoBietThu', N'" +
+              req.body.Name +
+              "', " +
+              req.body.PointCost +
+              ', ' +
+              req.body.Discount +
+              ", '" +
+              req.body.PartnerID +
+              "', " +
+              req.body.Quantity +
+              ", N'" +
+              code +
+              "', '" +
+              imgLink +
+              "', N'" +
+              req.body.ContentHeader +
+              "', N'" +
+              req.body.PreContent +
+              "', N'" +
+              req.body.Contents +
+              "', N'" +
+              req.body.VoucherNote +
+              "', '" +
+              slug +
+              "', '" +
+              CreateDate +
+              "', '" +
+              ExpDate +
+              "', '" +
+              req.body.MoneyDiscount +
+              "');";
+            request.query(str, (err, result) => {
+              if (err) res.status(400).send(err);
+              else res.status(200).send('Thêm mới thành công !');
+            });
+          }
+        });
+      }
 
-          let slug = tools.toslug(req.body.Name);
-          let code = tools.randomcode();
-          let CreateDate = req.body.CreateDate;
-          let ExpDate = req.body.ExpDate;
-          let str =
-            'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
-            "VALUES (N'" +
-            req.body.PartnerID +
-            req.body.Name +
-            "', N'canHoBietThu', N'" +
-            req.body.Name +
-            "', " +
-            req.body.PointCost +
-            ', ' +
-            req.body.Discount +
-            ", '" +
-            req.body.PartnerID +
-            "', " +
-            req.body.Quantity +
-            ", N'" +
-            code +
-            "', '" +
-            ImagePath +
-            "', N'" +
-            req.body.ContentHeader +
-            "', N'" +
-            req.body.PreContent +
-            "', N'" +
-            req.body.Contents +
-            "', N'" +
-            req.body.VoucherNote +
-            "', '" +
-            slug +
-            "', '" +
-            CreateDate +
-            "', '" +
-            ExpDate +
-            "', '" +
-            req.body.MoneyDiscount +
-            "');";
-          request.query(str, (err, result) => {
-            if (err) {
-              res.status(400);
-              res.send(err);
-            } else res.status(201);
-            res.send('Tạo thành công !');
-          });
-        }
-      });
+      function saveimg(x, callback) {
+        const s3 = new AWS.S3({
+          accessKeyId: 'AKIAZFXHRHWTCDY6IJV3',
+          secretAccessKey: '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',
+        });
+        console.log(req.files.ImageLink);
+        let key = Date.now() + req.files.ImageLink.name;
+        let params = {
+          Bucket: 'cnpm-bucket-voucher-team',
+          Key: key,
+          Body: req.files.ImageLink.data,
+        };
+        s3.upload(params, (err, result) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send(err);
+          } else {
+            console.log(result.Location);
+            imgLink = result.Location;
+            console.log('imgLink: ' + imgLink);
+            callback();
+            //res.status(200).send(result);
+          }
+        });
+      }
     }
   }
 
   // [POST] /api/CreateVoucherTourDuLich  *đã test
   createVoucherTourDuLich(req, res) {
-    //res.send(req.body);
+    let imgLink;
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
     let EndDate = Date.parse(req.body.ExpDate);
     console.log(EndDate);
     if (StartDate > EndDate) {
-      res.status(400);
-      res.send('Ngày hết hạn phải lớn hơn ngày bắt đầu');
+      res.status(200).send(' Ngày bắt đầu phải bé hơn ngày kết thúc !');
     } else {
-      let sampleFile = req.files.ImageLink;
-      let uploadPath =
-        'src/public/img/' + req.body.CreateDate + sampleFile.name;
-      sampleFile.mv(uploadPath, (err) => {
-        if (err) {
-          res.status(400);
-          res.send(err);
-        }
-      });
-
-      sql.connect(config, (err, result) => {
-        let request = new sql.Request();
-        if (err) {
-          res.status(400);
-          res.send('Error while querying database :- ' + err);
-        } else {
+      saveimg(true, sqlCon);
+      function sqlCon() {
+        sql.connect(config, (err, result) => {
           let request = new sql.Request();
+          if (err) {
+            console.log('Error while querying database :- ' + err);
+            throw err;
+          } else {
+            let request = new sql.Request();
 
-          let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            //let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            console.log('imgLink 2: ' + imgLink);
+            let slug = tools.toslug(req.body.Name);
+            let code = tools.randomcode();
+            let CreateDate = req.body.CreateDate;
+            let ExpDate = req.body.ExpDate;
+            let str =
+              'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
+              "VALUES (N'" +
+              req.body.PartnerID +
+              req.body.Name +
+              "', N'tourDuLich', N'" +
+              req.body.Name +
+              "', " +
+              req.body.PointCost +
+              ', ' +
+              req.body.Discount +
+              ", '" +
+              req.body.PartnerID +
+              "', " +
+              req.body.Quantity +
+              ", N'" +
+              code +
+              "', '" +
+              imgLink +
+              "', N'" +
+              req.body.ContentHeader +
+              "', N'" +
+              req.body.PreContent +
+              "', N'" +
+              req.body.Contents +
+              "', N'" +
+              req.body.VoucherNote +
+              "', '" +
+              slug +
+              "', '" +
+              CreateDate +
+              "', '" +
+              ExpDate +
+              "', '" +
+              req.body.MoneyDiscount +
+              "');";
+            request.query(str, (err, result) => {
+              if (err) res.status(400).send(err);
+              else res.status(200).send('Thêm mới thành công !');
+            });
+          }
+        });
+      }
 
-          let slug = tools.toslug(req.body.Name);
-          let code = tools.randomcode();
-          let CreateDate = req.body.CreateDate;
-          let ExpDate = req.body.ExpDate;
-          let str =
-            'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
-            "VALUES (N'" +
-            req.body.PartnerID +
-            req.body.Name +
-            "', N'tourDuLich', N'" +
-            req.body.Name +
-            "', " +
-            req.body.PointCost +
-            ', ' +
-            req.body.Discount +
-            ", '" +
-            req.body.PartnerID +
-            "', " +
-            req.body.Quantity +
-            ", N'" +
-            code +
-            "', '" +
-            ImagePath +
-            "', N'" +
-            req.body.ContentHeader +
-            "', N'" +
-            req.body.PreContent +
-            "', N'" +
-            req.body.Contents +
-            "', N'" +
-            req.body.VoucherNote +
-            "', '" +
-            slug +
-            "', '" +
-            CreateDate +
-            "', '" +
-            ExpDate +
-            "', '" +
-            req.body.MoneyDiscount +
-            "');";
-          request.query(str, (err, result) => {
-            if (err) {
-              res.status(400);
-              res.send(err);
-            } else res.status(201);
-            res.send('Tạo thành công !');
-          });
-        }
-      });
+      function saveimg(x, callback) {
+        const s3 = new AWS.S3({
+          accessKeyId: 'AKIAZFXHRHWTCDY6IJV3',
+          secretAccessKey: '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',
+        });
+        console.log(req.files.ImageLink);
+        let key = Date.now() + req.files.ImageLink.name;
+        let params = {
+          Bucket: 'cnpm-bucket-voucher-team',
+          Key: key,
+          Body: req.files.ImageLink.data,
+        };
+        s3.upload(params, (err, result) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send(err);
+          } else {
+            console.log(result.Location);
+            imgLink = result.Location;
+            console.log('imgLink: ' + imgLink);
+            callback();
+            //res.status(200).send(result);
+          }
+        });
+      }
     }
   }
 
   // [POST] /api/CreateVoucherDuaDonSanBay  *đã test
   createVoucherDuaDonSanBay(req, res) {
-    //res.send(req.body);
+    let imgLink;
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
     let EndDate = Date.parse(req.body.ExpDate);
     console.log(EndDate);
     if (StartDate > EndDate) {
-      res.status(400);
-      res.send('Ngày hết hạn phải lớn hơn ngày bắt đầu');
+      res.status(200).send(' Ngày bắt đầu phải bé hơn ngày kết thúc !');
     } else {
-      let sampleFile = req.files.ImageLink;
-      let uploadPath =
-        'src/public/img/' + req.body.CreateDate + sampleFile.name;
-      sampleFile.mv(uploadPath, (err) => {
-        if (err) {
-          res.status(400);
-          res.send(err);
-        }
-      });
-
-      sql.connect(config, (err, result) => {
-        let request = new sql.Request();
-        if (err) {
-          res.status(400);
-          res.send('Error while querying database :- ' + err);
-        } else {
+      saveimg(true, sqlCon);
+      function sqlCon() {
+        sql.connect(config, (err, result) => {
           let request = new sql.Request();
+          if (err) {
+            console.log('Error while querying database :- ' + err);
+            throw err;
+          } else {
+            let request = new sql.Request();
 
-          let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            //let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+            console.log('imgLink 2: ' + imgLink);
+            let slug = tools.toslug(req.body.Name);
+            let code = tools.randomcode();
+            let CreateDate = req.body.CreateDate;
+            let ExpDate = req.body.ExpDate;
+            let str =
+              'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
+              "VALUES (N'" +
+              req.body.PartnerID +
+              req.body.Name +
+              "', N'duaDonSanBay', N'" +
+              req.body.Name +
+              "', " +
+              req.body.PointCost +
+              ', ' +
+              req.body.Discount +
+              ", '" +
+              req.body.PartnerID +
+              "', " +
+              req.body.Quantity +
+              ", N'" +
+              code +
+              "', '" +
+              imgLink +
+              "', N'" +
+              req.body.ContentHeader +
+              "', N'" +
+              req.body.PreContent +
+              "', N'" +
+              req.body.Contents +
+              "', N'" +
+              req.body.VoucherNote +
+              "', '" +
+              slug +
+              "', '" +
+              CreateDate +
+              "', '" +
+              ExpDate +
+              "', '" +
+              req.body.MoneyDiscount +
+              "');";
+            request.query(str, (err, result) => {
+              if (err) res.status(400).send(err);
+              else res.status(200).send('Thêm mới thành công !');
+            });
+          }
+        });
+      }
 
-          let slug = tools.toslug(req.body.Name);
-          let code = tools.randomcode();
-          let CreateDate = req.body.CreateDate;
-          let ExpDate = req.body.ExpDate;
-          let str =
-            'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
-            "VALUES (N'" +
-            req.body.PartnerID +
-            req.body.Name +
-            "', N'duaDonSanBay', N'" +
-            req.body.Name +
-            "', " +
-            req.body.PointCost +
-            ', ' +
-            req.body.Discount +
-            ", '" +
-            req.body.PartnerID +
-            "', " +
-            req.body.Quantity +
-            ", N'" +
-            code +
-            "', '" +
-            ImagePath +
-            "', N'" +
-            req.body.ContentHeader +
-            "', N'" +
-            req.body.PreContent +
-            "', N'" +
-            req.body.Contents +
-            "', N'" +
-            req.body.VoucherNote +
-            "', '" +
-            slug +
-            "', '" +
-            CreateDate +
-            "', '" +
-            ExpDate +
-            "', '" +
-            req.body.MoneyDiscount +
-            "');";
-          request.query(str, (err, result) => {
-            if (err) {
-              res.status(400);
-              res.send(err);
-            } else res.status(201);
-            res.send('Tạo thành công !');
-          });
-        }
-      });
+      function saveimg(x, callback) {
+        const s3 = new AWS.S3({
+          accessKeyId: 'AKIAZFXHRHWTCDY6IJV3',
+          secretAccessKey: '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',
+        });
+        console.log(req.files.ImageLink);
+        let key = Date.now() + req.files.ImageLink.name;
+        let params = {
+          Bucket: 'cnpm-bucket-voucher-team',
+          Key: key,
+          Body: req.files.ImageLink.data,
+        };
+        s3.upload(params, (err, result) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send(err);
+          } else {
+            console.log(result.Location);
+            imgLink = result.Location;
+            console.log('imgLink: ' + imgLink);
+            callback();
+            //res.status(200).send(result);
+          }
+        });
+      }
     }
   }
 

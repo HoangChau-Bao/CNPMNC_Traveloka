@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 });
 
 //Cors
-//app.use(cors());
+app.use(cors());
 
 //Template engine
 app.engine(
