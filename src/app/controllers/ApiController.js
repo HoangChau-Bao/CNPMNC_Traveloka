@@ -1,8 +1,41 @@
 const config = require('../../config/db/dbconfig');
 const sql = require('mssql');
 const tools = require('../../util/tools');
+const { uploadFile } = require('../../util/s3');
+const multer = require('multer');
+const storage = multer.memoryStorage({
+  destination: function (req, file, callback) {
+    callback('null', '');
+  },
+});
+const upload = multer({ storage }).single('image');
+
+const AWS = require('aws-sdk');
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+});
 
 class ApiController {
+  testPostImgs3(req, res) {
+    console.log(req.files.ImageLink);
+    let key = Date.now() + req.files.ImageLink.name;
+    let params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: key,
+      Body: req.files.ImageLink.data,
+    };
+
+    s3.upload(params, (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        console.log(result.Location);
+        res.status(200).send(result);
+      }
+    });
+  }
+
   test(req, res) {
     sql.connect(config, (err, result) => {
       let str = 'SELECT * FROM Voucher';
@@ -26,22 +59,6 @@ class ApiController {
         });
       }
     });
-  }
-
-  testPostImgs3(req, res) {
-    //res.send(req.body);
-    let sampleFile = req.files.ImageLink;
-    //  let uploadPath =
-    //    'src/public/img/' + req.body.CreateDate + sampleFile.name;
-    //  sampleFile.mv(uploadPath, (err) => {
-    //   if (err) {
-    //      res.status(400);
-    //      res.send(err);
-    //    }
-    //  });
-
-    let file = req.files.ImageLink;
-    console.log(file);
   }
 
   //[GET] /api/GetrVouchersByID

@@ -14,15 +14,15 @@ const s3 = new S3({
 });
 
 function uploadFile(file) {
-  const fileSteam = fs.createReadStream(file.path);
+  //const fileSteam = fs.createReadStream(file.path);
 
   const uploadParams = {
     Bucket: bucketName,
-    Body: fileSteam,
-    Key: file.filename,
+    Body: file.data,
+    Key: file.name,
   };
 
-  return s3.upload(uploadParams).promise();
+  return s3.upload(uploadParams);
 }
 
 exports.uploadFile = uploadFile;

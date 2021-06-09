@@ -4,6 +4,18 @@ const tools = require('../../util/tools');
 const fs = require('fs');
 const path = require('path');
 const { renderSync } = require('node-sass');
+const AWS = require('aws-sdk');
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+});
+const multer = require('multer');
+const storage = multer.memoryStorage({
+  destination: function (req, file, callback) {
+    callback('null', '');
+  },
+});
+const upload = multer({ storage }).single('image');
 
 class VoucherController {
   //[GET] /vouchers/:slug   *vào trang chi tiết voucher
@@ -49,6 +61,25 @@ class VoucherController {
   // [POST] /vouchers/store  *lưu voucher
   store(req, res, next) {
     //res.send(req.body);
+
+    console.log(req.files.ImageLink);
+    let key = Date.now() + req.files.ImageLink.name;
+    let params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: key,
+      Body: req.files.ImageLink.data,
+    };
+    let imglink;
+    s3.upload(params, (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        console.log(result);
+        imglink = result.Location;
+        res.status(200).send(result);
+      }
+    });
+
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
     let EndDate = Date.parse(req.body.ExpDate);
@@ -58,12 +89,12 @@ class VoucherController {
         messages: 'Ngày hết hạn phải lớn hơn ngày bắt đầu !',
       });
     } else {
-      let sampleFile = req.files.ImageLink;
-      let uploadPath =
-        'src/public/img/' + req.body.CreateDate + sampleFile.name;
-      sampleFile.mv(uploadPath, (err) => {
-        if (err) return res.send(err);
-      });
+      // let sampleFile = req.files.ImageLink;
+      // let uploadPath =
+      //   'src/public/img/' + req.body.CreateDate + sampleFile.name;
+      // sampleFile.mv(uploadPath, (err) => {
+      //   if (err) return res.send(err);
+      // });
 
       sql.connect(config, (err, result) => {
         let request = new sql.Request();
@@ -73,7 +104,7 @@ class VoucherController {
         } else {
           let request = new sql.Request();
 
-          let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
+          //let ImagePath = '/img/' + req.body.CreateDate + sampleFile.name;
 
           let slug = tools.toslug(req.body.Name);
           let code = tools.randomcode();
@@ -99,7 +130,7 @@ class VoucherController {
             ", N'" +
             code +
             "', '" +
-            ImagePath +
+            imglink +
             "', N'" +
             req.body.ContentHeader +
             "', N'" +
