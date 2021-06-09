@@ -105,8 +105,13 @@ class ApiController {
             res.status(400);
             res.send('Error :- ' + err);
           } else {
-            res.status(200);
-            res.json(result);
+            if (result.recordset.length == 0) {
+              res.status(400);
+              res.send('Code không tồn tại !');
+            } else {
+              res.status(200);
+              res.json(result);
+            }
           }
         });
       }
