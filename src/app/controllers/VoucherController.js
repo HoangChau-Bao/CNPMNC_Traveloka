@@ -110,7 +110,7 @@ class VoucherController {
             let str =
               'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
               "VALUES (N'" +
-              req.user.PartnerID +
+              req.body.PartnerID +
               req.body.Name +
               "', N'" +
               req.body.CatalogID +
@@ -121,7 +121,7 @@ class VoucherController {
               ', ' +
               req.body.Discount +
               ", '" +
-              req.user.PartnerID +
+              req.body.PartnerID +
               "', " +
               req.body.Quantity +
               ", N'" +
