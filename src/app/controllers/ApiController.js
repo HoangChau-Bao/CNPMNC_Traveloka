@@ -26,12 +26,15 @@ class ApiController {
       Body: req.files.ImageLink.data,
     };
 
-    s3.upload(params, (err, result) => {
+    s3.upload(params, (err, result, callback) => {
       if (err) {
-        res.status(500).send(err);
+        console.log(err);
+        callback();
+        //res.status(500).send(err);
       } else {
         console.log(result.Location);
-        res.status(200).send(result);
+        callback();
+        //res.status(200).send(result);
       }
     });
   }
