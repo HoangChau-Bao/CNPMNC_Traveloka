@@ -194,13 +194,14 @@ class UserController {
       let tenvoucher = req.body.Name;
       let code = req.body.Code;
       let slug = req.body.slug;
+      let imagelink = req.body.ImageLink;
       let pointcost = req.body.PointCost;
 
       //console.log(parseInt(req.user.DiemHienTai,10) - parseInt(pointcost,10));
 
       if (parseInt(req.user.DiemHienTai, 10) - parseInt(pointcost, 10) >= 0) {
         let str =
-          'INSERT INTO CTVoucher (Voucher_id, TaiKhoan, Code, CatalogID, TenVoucher, voucherslug)' +
+          'INSERT INTO CTVoucher (Voucher_id, TaiKhoan, Code, CatalogID, TenVoucher, voucherslug, ImageLink)' +
           " VALUES ('" +
           voucherid +
           "', '" +
@@ -213,6 +214,8 @@ class UserController {
           tenvoucher +
           "', '" +
           slug +
+          "', '" +
+          imagelink +
           "');";
         let request = new sql.Request();
         if (err) {

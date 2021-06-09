@@ -60,5 +60,6 @@ router.post(
   '/UpdateUserPointByTaiKhoan',
   apiController.UpdateUserPointByTaiKhoan,
 );
+router.post('/CreateUser', apiController.createUser);
 
 module.exports = router;

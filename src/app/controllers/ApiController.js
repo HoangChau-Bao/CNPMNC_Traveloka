@@ -1100,5 +1100,32 @@ class ApiController {
       }
     });
   }
+
+  createUser(req, res) {
+    sql.connect(config, (err, result) => {
+      let str =
+        'INSERT INTO NguoiDung (TaiKhoan, MatKhau, HoTen, SoDienThoai, DiaChi) ' +
+        "VALUES ('" +
+        req.body.email +
+        "', '" +
+        req.body.pass +
+        "', N' ', ' ', N' ');";
+      let request = new sql.Request();
+      if (err) {
+        res.status(400);
+        res.send('Error while querying database :- ' + err);
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            res.status(400);
+            res.send('Error :- ' + err);
+          } else {
+            res.status(201);
+            res.send('Thêm người dùng thành công !');
+          }
+        });
+      }
+    });
+  }
 }
 module.exports = new ApiController();

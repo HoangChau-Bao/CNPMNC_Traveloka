@@ -17,6 +17,25 @@ let initPassportLocal = () => {
       },
       (req, TaiKhoan, MatKhau, done) => {
         try {
+          // request.post({url:'https://oka1kh.azurewebsites.net/api/user/login', json: {email:"nhattien123@gmail.com", pass: "123456"}}, function(err,httpResponse,body){
+          // if(err)
+          //     throw err;
+          // //console.log(httpResponse.statusCode);
+          //   let token = httpResponse.body.data.token;
+          //   if(httpResponse.statusCode == 404){
+          //     return done(null, false);
+          //   }
+          //   else{
+          //     request.get({url:'https://oka1kh.azurewebsites.net/api/profiles', headers: {authorization: token}}, function (error, result) {
+          //       //console.error('error:', error);
+          //       //console.log('statusCode:', result && result.statusCode);
+          //       let x = JSON.parse(result.body);
+          //       user = x.data.auth;
+          //       return (null,user)
+          //     })
+          //   }
+          // });
+
           sql.connect(config, (err, NguoiDung) => {
             let str =
               "SELECT * FROM NguoiDung WHERE TaiKhoan= '" +
@@ -53,9 +72,9 @@ let initPassportLocal = () => {
             });
           });
 
-          //let user = await UserModel.findByEmail(TaiKhoan);
+          // //let user = await UserModel.findByEmail(TaiKhoan);
 
-          //let checkPassword = await(user.comparePassword(MatKhau));
+          // //let checkPassword = await(user.comparePassword(MatKhau));
         } catch (error) {
           console.log(error);
           return done(null, false);
