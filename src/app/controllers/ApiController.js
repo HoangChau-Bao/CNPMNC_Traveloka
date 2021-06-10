@@ -1013,7 +1013,7 @@ class ApiController {
         req.body.TaiKhoan +
         "' AND Code = '" +
         req.body.Code +
-        "'";
+        "' AND Status = 1";
       let str2 =
         "UPDATE TOP (1) CTVoucher set Status = 0 where Taikhoan ='" +
         req.body.TaiKhoan +
