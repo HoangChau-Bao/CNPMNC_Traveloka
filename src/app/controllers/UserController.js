@@ -43,7 +43,7 @@ class UserController {
             console.log('ERROR ' + err);
             throw err;
           } else {
-            if (req.user.PartnerID == '')
+            if (req.user.PartnerID == 'user')
               res.render('user/profile', { user: result.recordset });
             else res.render('user/profilepartner', { user: result.recordset });
             //res.json(result);
@@ -108,7 +108,7 @@ class UserController {
       let str2 = "SELECT * FROM NguoiDung Where SoDienThoai='" + sdt + "'"; //query kiểm tra số điện thoại đã tồn tại chưa;
 
       let str3 =
-        'INSERT INTO NguoiDung (TaiKhoan, MatKhau, HoTen, SoDienThoai, DiaChi) ' +
+        'INSERT INTO NguoiDung (TaiKhoan, MatKhau, HoTen, SoDienThoai, DiaChi, PartnerID) ' +
         "VALUES ('" +
         taikhoan +
         "', '" +
@@ -119,7 +119,7 @@ class UserController {
         sdt +
         "', N'" +
         diachi +
-        "');";
+        "', 'user');";
 
       let request = new sql.Request();
       if (err) {
@@ -193,8 +193,9 @@ class UserController {
   //[GET]  /user/voucherwarehouse
   voucherwarehouse(req, res) {
     sql.connect(config, (err, result) => {
-      let taikhoan = req.user.auth[0].email;
-      console.log('email: ', req.user.auth[0].email);
+      //let taikhoan = req.user.auth[0].email;
+      let taikhoan = req.user.TaiKhoan;
+      //console.log('email: ', req.user.auth[0].email);
       let str =
         "SELECT * FROM CTVoucher Where TaiKhoan='" +
         taikhoan +
