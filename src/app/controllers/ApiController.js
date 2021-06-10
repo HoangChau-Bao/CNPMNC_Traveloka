@@ -1015,7 +1015,11 @@ class ApiController {
         req.body.Code +
         "'";
       let str2 =
-        "UPDATE TOP (1) CTVoucher set Status = 0 where Taikhoan = 'a' AND Code = 'VJBAYBAY' And Status = 1";
+        "UPDATE TOP (1) CTVoucher set Status = 0 where Taikhoan ='" +
+        req.body.TaiKhoan +
+        "' AND Code = '" +
+        req.body.Code +
+        "' And Status = 1";
       let request = new sql.Request();
       if (err) {
         res.status(400);
