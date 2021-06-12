@@ -18,39 +18,46 @@
                     <input type="hidden" name="TaiKhoan" value="{{TaiKhoan}}" >
                     <div class="col-md-6">
                     <div class="form-group">
-                        <label>Họ tên</label>
-                        <input type="text" name="HoTen" class="form-control" value="{{HoTen}}">
+                        <label>Họ</label>
+                        <input type="text" name="Ho" class="form-control" value="{{fristName}}">
                     </div>
-                    </div>                   
+                    <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Tên</label>
+                        <input type="text" name="Ten" class="form-control" value="{{this.lastName}}">
+                    </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Số điện thoại</label>
-                        <input type="tel" class="form-control" id="SoDienThoai" name="SoDienThoai" placeholder="Số điện thoại..." autocomplete="off" minlength="10" maxlength="10" value="{{SoDienThoai}}">
+                        <input type="tel" class="form-control" id="SoDienThoai" name="SoDienThoai" placeholder="Số điện thoại..." autocomplete="off" minlength="10" maxlength="10" value="{{this.phone}}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Điểm hiện có</label>
-                            <input type="number" name="DiemHienTai" class="form-control" value="{{DiemHienTai}}" readonly>
+                            <label>Điểm hiện tại</label>
+                            <input type="number" name="DiemHienTai" class="form-control" value="{{this.value_TotalPoint}}" readonly>
                         </div>
                     </div>
-                    <div class="col-md-6">
+
+                    {{!-- <div class="col-md-6">
                         <div class="form-group">
-                            <label>Điểm tổng</label>
-                            <input type="number" name="DiemTong" class="form-control" value="{{DiemTong}}" readonly>
+                            <label>Điểm hiện tại</label>
+                            <input type="number" name="DiemHienTai" class="form-control" value="{{Point}}" readonly>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Địa chỉ</label>
-                            <textarea class="form-control" name="DiaChi" rows="4">{{DiaChi}}</textarea>
+                            <textarea class="form-control" name="DiaChi" rows="4">{{this.userAddress}}</textarea>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <button class="btn btn-primary">Update</button>
-                        <input class="btn btn-basic" name="buttoncancel" id="buttoncancel" type="button" onclick="window.location.replace('/user/profile')" value="Cancel" />
-                    </div>  
+                <div class="col-md-12">
+                    <button class="btn btn-primary">Update</button>
+                    <input class="btn btn-basic" name="buttoncancel" id="buttoncancel" type="button" onclick="window.location.replace('/user/profile')" value="Cancel" />
+                </div>  
                 </form>
+                
                 
         {{/each}}
     </div>

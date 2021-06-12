@@ -1,6 +1,7 @@
 const config = require('../../config/db/dbconfig');
 const sql = require('mssql');
 const tools = require('../../util/tools');
+const request = require('request');
 const { uploadFile } = require('../../util/s3');
 const multer = require('multer');
 const storage = multer.memoryStorage({
@@ -1051,85 +1052,90 @@ class ApiController {
   }
 
   UpdateUserPointByTaiKhoan(req, res) {
-    sql.connect(config, (err, result) => {
-      let DiemHienTai, DiemTong;
-      let str =
-        "SELECT TOP 1 * FROM NguoiDung WHERE TaiKHoan = '" +
-        req.body.TaiKhoan +
-        "'";
-      let request = new sql.Request();
-      if (err) {
-        console.log('Error while querying database :- ' + err);
-        throw err;
-      } else {
-        request.query(str, function (err, result) {
-          if (err) {
-            console.log('ERROR ' + err);
-            throw err;
-          } else {
-            if (result.recordset.length != 0) {
-              DiemHienTai = parseInt(result.recordset[0].DiemHienTai);
-              DiemTong = parseInt(result.recordset[0].DiemTong);
-              console.log(DiemHienTai + '  ' + DiemTong);
-              DiemHienTai += parseInt(req.body.Diem);
-              DiemTong += parseInt(req.body.Diem);
-              console.log(DiemHienTai + '  ' + DiemTong);
-              let str2 =
-                'UPDATE NguoiDung SET DiemTong = ' +
-                DiemTong +
-                ', DiemHienTai = ' +
-                DiemHienTai +
-                " WHERE TaiKhoan = '" +
-                req.body.TaiKhoan +
-                "'";
-              request.query(str2, (err, result2) => {
-                if (err) {
-                  res.status(400);
-                  res.send('ERR: ' + err);
-                } else {
-                  res.status(200);
-                  res.send(
-                    'Cập nhật điểm thành công cho tài khoản ' +
-                      req.body.TaiKhoan +
-                      '!',
-                  );
-                }
-              });
-            } else {
-              res.status(400);
-              res.send('Tài khoản không tồn tại !');
-            }
-          }
-        });
-      }
-    });
-  }
+    // sql.connect(config, (err, result) => {
+    //   let DiemHienTai, DiemTong;
+    //   let str =
+    //     "SELECT TOP 1 * FROM NguoiDung WHERE TaiKHoan = '" +
+    //     req.body.TaiKhoan +
+    //     "'";
+    //   let request = new sql.Request();
+    //   if (err) {
+    //     console.log('Error while querying database :- ' + err);
+    //     throw err;
+    //   } else {
+    //     request.query(str, function (err, result) {
+    //       if (err) {
+    //         console.log('ERROR ' + err);
+    //         throw err;
+    //       } else {
+    //         if (result.recordset.length != 0) {
+    //           DiemHienTai = parseInt(result.recordset[0].DiemHienTai);
+    //           DiemTong = parseInt(result.recordset[0].DiemTong);
+    //           console.log(DiemHienTai + '  ' + DiemTong);
+    //           DiemHienTai += parseInt(req.body.Diem);
+    //           DiemTong += parseInt(req.body.Diem);
+    //           console.log(DiemHienTai + '  ' + DiemTong);
+    //           let str2 =
+    //             'UPDATE NguoiDung SET DiemTong = ' +
+    //             DiemTong +
+    //             ', DiemHienTai = ' +
+    //             DiemHienTai +
+    //             " WHERE TaiKhoan = '" +
+    //             req.body.TaiKhoan +
+    //             "'";
+    //           request.query(str2, (err, result2) => {
+    //             if (err) {
+    //               res.status(400);
+    //               res.send('ERR: ' + err);
+    //             } else {
+    //               res.status(200);
+    //               res.send(
+    //                 'Cập nhật điểm thành công cho tài khoản ' +
+    //                   req.body.TaiKhoan +
+    //                   '!',
+    //               );
+    //             }
+    //           });
+    //         } else {
+    //           res.status(400);
+    //           res.send('Tài khoản không tồn tại !');
+    //         }
+    //       }
+    //     });
+    //   }
+    // });
 
-  createUser(req, res) {
-    sql.connect(config, (err, result) => {
-      let str =
-        'INSERT INTO NguoiDung (TaiKhoan, MatKhau, HoTen, SoDienThoai, DiaChi) ' +
-        "VALUES ('" +
-        req.body.email +
-        "', '" +
-        req.body.pass +
-        "', N' ', ' ', N' ');";
-      let request = new sql.Request();
-      if (err) {
-        res.status(400);
-        res.send('Error while querying database :- ' + err);
-      } else {
-        request.query(str, function (err, result) {
-          if (err) {
-            res.status(400);
-            res.send('Error :- ' + err);
-          } else {
-            res.status(201);
-            res.send('Thêm người dùng thành công !');
-          }
-        });
-      }
-    });
+    //tich hop profile
+    let diem = parseInt(req.body.Diem);
+    let taikhoan = req.body.TaiKhoan;
+    let id;
+    request.get(
+      {
+        url:
+          'https://oka1kh.azurewebsites.net/api/userbyemail/' + taikhoan + '',
+      },
+      function (error, result) {
+        if (result.body == 'not found')
+          res.status(400).send('Không thấy tài khoản !');
+        else {
+          let x = JSON.parse(result.body);
+          id = x.user[0].userId;
+          request.post(
+            {
+              url:
+                'https://oka1kh.azurewebsites.net/api/user/update_point/' +
+                id +
+                '',
+              json: { point: diem },
+            },
+            function (err, httpResponse, body) {
+              if (err) res.status(400).send(err);
+              else res.status(200).send('Đã cập nhật điểm !');
+            },
+          );
+        }
+      },
+    );
   }
 }
 module.exports = new ApiController();

@@ -6,14 +6,14 @@
 	</div>
 
     
-	<div id="content" style="padding-top: 170px; padding-bottom: 50px; width: 1000px">
+	<div id="content" style="padding-left: 100px; padding-top: 170px; padding-bottom: 50px; width: 1000px">
         <h1 style="font-weight: bold; padding-left: 370px; padding-bottom: 50px;">Kho voucher của bạn</h1>
         {{#each vouchers}}
         <div class="mb-3">
             <div class="w3-card-4">
 
-                <header class="w3-container w3-light-grey">
-                    <img src="/img/{{CatalogID}}.png" alt="Avatar" class="w3-left w3-circle" style="margin-right: 30px;">
+                <header class="w3-container w3-light-grey" style="text-align: center;">
+                    <img src="{{ImageLink}}" alt="Avatar" style="margin-right: 30px;" height="200px" width="1000px">
                     <h3>{{TenVoucher}}</h3>
                     
                 </header>
@@ -22,6 +22,8 @@
                     <hr>
                     <h6>Mã ưu đãi:</h6>
                     <h5>{{Code}}</h5>
+                    <h6>Ngày hết hạn:</h6>
+                    <h5>{{ExpDate}}</h5>
                     <p></p>
                 </div>
                 <form action="/vouchers/{{voucherslug}}" method="get">

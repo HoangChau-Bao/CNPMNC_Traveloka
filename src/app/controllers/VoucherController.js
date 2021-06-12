@@ -87,7 +87,7 @@ class VoucherController {
             let str =
               'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
               "VALUES (N'" +
-              req.body.PartnerID +
+              req.user.auth[0].note +
               req.body.Name +
               "', N'" +
               req.body.CatalogID +
@@ -98,7 +98,7 @@ class VoucherController {
               ', ' +
               req.body.Discount +
               ", '" +
-              req.body.PartnerID +
+              req.user.auth[0].note +
               "', " +
               req.body.Quantity +
               ", N'" +
@@ -171,6 +171,7 @@ class VoucherController {
       });
     } else {
       saveimg(true, sqlCon);
+
       function sqlCon() {
         sql.connect(config, (err, result) => {
           let request = new sql.Request();
@@ -189,7 +190,7 @@ class VoucherController {
             let str =
               'INSERT INTO Voucher (VoucherID,CatalogID,Name,PointCost,Discount,PartnerID,Quantity,Code,ImageLink,ContentHeader,PreContent,Contents,VoucherNote,slug,CreateDate,ExpDate,MoneyDiscount) ' +
               "VALUES (N'" +
-              req.body.PartnerID +
+              req.user.auth[0].note +
               req.body.Name +
               "', N'" +
               req.body.CatalogID +
@@ -200,7 +201,7 @@ class VoucherController {
               ', ' +
               req.body.Discount +
               ", '" +
-              req.body.PartnerID +
+              req.user.auth[0].note +
               "', " +
               req.body.Quantity +
               ", N'" +
@@ -280,11 +281,11 @@ class VoucherController {
       ' AND Status = 0 AND getdate() > CONVERT(DATETIME, ExpDate)';
 
     let status = req.body.Status;
-    let imagelink = req.body.ImageLink;
+    //let imagelink = req.body.ImageLink;
     //console.log(__dirname + imagelink.split("/").join("\\"));
-    console.log(
-      path.resolve('src', 'public') + imagelink.split('/').join('\\'),
-    );
+    // console.log(
+    //   path.resolve('src', 'public') + imagelink.split('/').join('\\'),
+    // );
     if (status == 'false') {
       sql.connect(config, (err, result) => {
         let request = new sql.Request();
@@ -297,10 +298,10 @@ class VoucherController {
               console.log('ERROR ' + err);
               throw err;
             } else {
-              console.log(path);
-              fs.unlinkSync(
-                path.resolve('src', 'public') + imagelink.split('/').join('\\'),
-              );
+              // console.log(path);
+              // fs.unlinkSync(
+              //   path.resolve('src', 'public') + imagelink.split('/').join('\\'),
+              // );
               res.redirect('/admin/vouchermanage');
             }
           });

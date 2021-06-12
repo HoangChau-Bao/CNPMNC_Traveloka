@@ -23,48 +23,32 @@
             <thead>
                 <tr>
                     <th>UserID</th>
-                    <th>PartnerID</th>
                     <th>Tài khoản</th>
                     <th>Họ tên</th>
                     <th>Điểm hiện có</th>
-                    <th>Điểm tổng</th>
                     <th>Số điện thoại</th>
                     <th>Địa chỉ</th>
                     <th>Chức vụ</th>
-                    <th>Trạng thái</th>
-                    <th>Bật/Tắt</th>
                     <th>Xóa</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each user}}
-                    
-                        <tr>    
-                            <form action="/admin/usermanage/changestatususer" method="POST">        
-                                <input type="hidden" name="TaiKhoan" value="{{this.TaiKhoan}}">
-                                <input type="hidden" name="Status" value="{{this.Status}}">
-                                <td>{{this.NguoiDungID}}</td>
-                                <td>{{this.PartnerID}}</td>
-                                <td>{{this.TaiKhoan}}</td>
-                                <td>{{this.HoTen}}</td>
-                                <td>{{this.DiemHienTai}}</td>
-                                <td>{{this.DiemTong}}</td>
-                                <td>{{this.SoDienThoai}}</td>
-                                <td>{{this.DiaChi}}</td>
-                                <td>{{this.ChucVu}}</td>
-                                <td>{{this.Status}}</td>
-                                <td>                        
-                                    <button class="btn btn-success"><i class="fa fa-toggle-on"></i></button>                         
-                                </td> 
-                                </form>   
-                            <form action="/admin/usermanage/deletevoucher" method="POST">
-                                <input type="hidden" name="TaiKhoan" value="{{this.TaiKhoan}}">
-                                <input type="hidden" name="Status" value="{{this.Status}}">
+                
+                        <tr>         
+                            <td>{{this.userId}} </td>
+                            <td>{{this.email}} </td>
+                            <td>{{this.fristName}} {{this.lastName}}</td>
+                            <td>{{this.value_TotalPoint}} </td>
+                            <td>{{this.phone}} </td>
+                            <td>{{this.userAddress}} </td>
+                            <td>{{this.note}} </td>
+                            <form action="/admin/usermanage/deleteuser" method="POST">
+                                <input type="hidden" name="userId" value="{{this.userId}}">
                                 <td>
                                     <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>  
-                            </form>   
-                                                                           
+                            </form>                                                                              
                         </tr>
                     
                {{/each}}
@@ -72,16 +56,12 @@
             <tfoot>
                 <tr>
                     <th>UserID</th>
-                    <th>PartnerID</th>
                     <th>Tài khoản</th>
                     <th>Họ tên</th>
                     <th>Điểm hiện có</th>
-                    <th>Điểm tổng</th>
                     <th>Số điện thoại</th>
                     <th>Địa chỉ</th>
                     <th>Chức vụ</th>
-                    <th>Trạng thái</th>
-                    <th>Bật/Tắt</th>
                     <th>Xóa</th>
                 </tr>
                 

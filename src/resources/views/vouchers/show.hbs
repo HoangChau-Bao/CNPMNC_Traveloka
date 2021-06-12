@@ -1,7 +1,7 @@
 <div class="voucher-detail">
     {{#if isAuthenticated}}
         {{#each voucher}}
-            <img class="voucherdetail-top-image" src="{{ImageLink}}">    
+            <img class="voucherdetail-top-image" src="{{ImageLink}}" height="500">    
             <h2 class="contentHeader-text">{{ContentHeader}}</h2>
             <h5 class="content-text">{{Contents}} </h5>
             <div class="card card-code" style="width: 500px;">
@@ -24,6 +24,7 @@
                     <input type="hidden" name="CatalogID" value="{{CatalogID}}">
                     <input type="hidden" name="slug" value="{{slug}}">
                     <input type="hidden" name="ImageLink" value="{{ImageLink}}">
+                    <input type="hidden" name="ExpDate" value="{{ExpDate}}">
                     <button class="btn btn-primary btn-findvoucher">Mua voucher này với giá {{PointCost}} điểm !</button>
                 </form>       
         {{/each}}
@@ -31,7 +32,7 @@
     {{else}}
 
         {{#each voucher}}
-            <img class="voucherdetail-top-image" src="{{ImageLink}}">    
+            <img class="voucherdetail-top-image" src="{{ImageLink}}" height="500">    
             <h2 class="contentHeader-text">{{ContentHeader}}</h2>
             <h5 class="content-text">{{Contents}} </h5>
             <div class="card card-code" style="width: 500px;">
