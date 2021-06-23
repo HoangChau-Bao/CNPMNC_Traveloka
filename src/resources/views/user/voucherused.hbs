@@ -8,7 +8,7 @@
 
     
 	<div id="content" style="padding-left: 100px; padding-top: 170px; padding-bottom: 50px; width: 1000px">
-        <h1 style="font-weight: bold; padding-left: 370px; padding-bottom: 50px;">Kho voucher của bạn</h1>
+        <h1 style="font-weight: bold; padding-left: 370px; padding-bottom: 50px;">Voucher đã sử dụng</h1>
         {{#each vouchers}}
         <div class="mb-3">
             <div class="w3-card-4">
@@ -21,11 +21,9 @@
 
                 <div class="w3-container">
                     <hr>
-                    <h6>Mã ưu đãi:</h6>
-                    <h5>{{Code}}</h5>
                     <h6>Ngày hết hạn:</h6>
                     <h5>{{ExpDate}}</h5>
-                    <h6>Tình trạng:</h6><h5 style="color: green;"> Chưa sử dụng</h5>
+                    <h6 >Tình trạng:</h6><h5 style="color: red;"> Đã sử dụng</h5>
                     <p></p>
                 </div>
                 <form action="/vouchers/{{voucherslug}}" method="get">

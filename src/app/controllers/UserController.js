@@ -109,11 +109,11 @@ class UserController {
     //tich hop profile
     //console.log(req.user.auth[0]);
     let id = req.user.auth[0].userId;
-    let taikhoan = req.body.TaiKhoan;
     let ho = req.body.Ho;
     let ten = req.body.Ten;
     let sdt = req.body.SoDienThoai;
     let diachi = req.body.DiaChi;
+    let taikhoan = req.user.auth[0].email;
 
     request.patch(
       {
@@ -134,7 +134,7 @@ class UserController {
             function (err2, httpResponse2, body2) {
               if (err) throw err;
               else if (httpResponse2.statusCode == 200) {
-                requestt.post(
+                request.post(
                   {
                     url:
                       'https://oka1kh.azurewebsites.net/api/user/update_address/' +
@@ -228,7 +228,7 @@ class UserController {
     //   }
     // });
 
-    //tich hop profile còn thiếu
+    //tich hop profile
     let taikhoan = req.body.TaiKhoan;
     let matkhau = req.body.MatKhau;
     let ho = req.body.Ho;
@@ -273,7 +273,7 @@ class UserController {
                   function (err, httpResponse, body) {
                     if (err) res.statusCode(400).send(err);
                     else {
-                      requestt.post(
+                      request.post(
                         {
                           url:
                             'https://oka1kh.azurewebsites.net/api/user/update_address/' +
@@ -545,6 +545,34 @@ class UserController {
         }
       },
     );
+  }
+
+  voucherused(req, res) {
+    sql.connect(config, (err, result) => {
+      //let taikhoan = req.user.TaiKhoan;
+
+      let taikhoan = req.user.auth[0].email;
+      console.log('email: ', req.user.auth[0].email);
+      let str =
+        "SELECT * FROM CTVoucher Where TaiKhoan='" +
+        taikhoan +
+        "' AND Status = 0";
+      let request = new sql.Request();
+      if (err) {
+        console.log('Error while querying database :- ' + err);
+        throw err;
+      } else {
+        request.query(str, function (err, result) {
+          if (err) {
+            console.log('ERROR ' + err);
+            throw err;
+          } else {
+            res.render('user/voucherused', { vouchers: result.recordset });
+            //res.json(result);
+          }
+        });
+      }
+    });
   }
 }
 module.exports = new UserController();

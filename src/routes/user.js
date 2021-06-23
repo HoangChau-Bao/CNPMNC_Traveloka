@@ -24,6 +24,7 @@ router.get('/logout', userController.logout);
 
 router.get('/profile', userController.profile);
 router.get('/voucherwarehouse', userController.voucherwarehouse);
+router.get('/voucherused', userController.voucherused);
 router.post('/registerstore', userController.registerstore);
 router.post('/profileupdate', userController.profileupdate);
 router.post('/buyvoucher', userController.buyvoucher);
