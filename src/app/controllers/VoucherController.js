@@ -61,11 +61,17 @@ class VoucherController {
     let imgLink;
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
+    let now = Date.now();
     let EndDate = Date.parse(req.body.ExpDate);
     console.log(EndDate);
     if (StartDate > EndDate) {
       res.render('vouchers/addvoucher', {
         messages: 'Ngày hết hạn phải lớn hơn ngày bắt đầu !',
+      });
+    }
+    if (EndDate < now) {
+      res.render('vouchers/addvoucher', {
+        messages: 'Ngày hết hạn phải lớn hơn ngày hiện tại !',
       });
     } else {
       saveimg(true, sqlCon);
@@ -163,11 +169,17 @@ class VoucherController {
     let imgLink;
     let StartDate = Date.parse(req.body.CreateDate);
     console.log(StartDate);
+    let now = Date.now();
     let EndDate = Date.parse(req.body.ExpDate);
     console.log(EndDate);
     if (StartDate > EndDate) {
       res.render('vouchers/addvoucher', {
         messages: 'Ngày hết hạn phải lớn hơn ngày bắt đầu !',
+      });
+    }
+    if (EndDate < now) {
+      res.render('vouchers/addvoucher', {
+        messages: 'Ngày hết hạn phải lớn hơn ngày hiện tại !',
       });
     } else {
       saveimg(true, sqlCon);

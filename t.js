@@ -42,12 +42,12 @@ const request = require('request');
 //     console.log(httpResponse.statusCode);
 //  })
 
-request.get({url:"https://oka1kh.azurewebsites.net/api/userbyemail/Hotel2@gmail.com"}, function (error, result) {
-    console.log(body);
-    let x = JSON.parse(result.body);
-    console.log(x.user[0].value_TotalPoint);
-    console.log(result.body);
-});
+// request.get({url:"https://oka1kh.azurewebsites.net/api/userbyemail/Hotel2@gmail.com"}, function (error, result) {
+//     console.log(body);
+//     let x = JSON.parse(result.body);
+//     console.log(x.user[0].value_TotalPoint);
+//     console.log(result.body);
+// });
 
 
 // request.patch({url:"https://oka1kh.azurewebsites.net/api/user/change_name/"+2416+"", json: { fristName: 'ho', lastName: 'ten'}}, function(err,httpResponse1,body1){ 
@@ -73,3 +73,13 @@ request.get({url:"https://oka1kh.azurewebsites.net/api/userbyemail/Hotel2@gmail.
 //     console.log(body);
 //     console.log(httpResponse.statusCode);
 //  }})
+
+let date1 = Date.parse('2021/02/1');
+
+let date2 = Date.parse('2021/09/3');
+let date4 = Date.now();
+let date3 = date2 - date1;
+
+if(date4 > date2){
+    console.log('yes');
+}
